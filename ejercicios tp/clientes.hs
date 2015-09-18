@@ -81,16 +81,24 @@ tellPelicula (Pelicula {_idp = i, _titulo = t, _alquilada=a}) = "Pelicula "++ sh
 tituloPelicula :: Pelicula -> String
 tituloPelicula (Pelicula {_titulo = t}) = t 
 
+copiasPelicula :: Pelicula -> String
+copiasPelicula (Pelicula {_idp = i,_titulo = t}) = "Pelicula: "++ show i ++ ": " ++ t ++ " | Cantidad de copias: "++ show(cantidad_copias t)
+
+
+
 
 -- cantidad_copias_pelicula :: String -> int
 -- cantidad_copias_pelicula titulo = length (filter )
-existe_pelicula titulo = find (==titulo) (map (tituloPelicula) peliculas)
+existe_pelicula titulo = find (==titulo) $map (tituloPelicula) peliculas
+cantidad_copias titulo = length $filter (==titulo) $map (tituloPelicula) peliculas 
+
 contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No existe esa pelicula"
-                                                            Just titulo -> titulo ++" tiene " ++ show (length (filter (==titulo) (map (tituloPelicula) peliculas))) ++" copias."
+                                                          Just titulo -> titulo ++" tiene " ++ if (cantidad_copias titulo) == 1 then show(cantidad_copias titulo)++" copia." else show (cantidad_copias titulo)++" copias."
 
-
-listar_clientes = mapM_ print (map (tellCliente) clientes)
-listar_peliculas = mapM_ print (map (tellPelicula) peliculas)
+                                                                                                                                     
+listar_copias_peliculas = mapM print $map (copiasPelicula) peliculas
+listar_clientes = mapM_ print $map (tellCliente) clientes
+listar_peliculas = mapM_ print $map (tellPelicula) peliculas
 
 
 -- buscar :: (Eq a) => a -> [a] -> a
