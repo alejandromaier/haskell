@@ -26,14 +26,14 @@ data Pelicula = Pelicula
 
 --          |Tipo    |id |    titulo pelicula             | alquilada?| Videclub    |   categoria
 pelicula1  = Pelicula 1   "Inception"                         True      V.videoclub1      "Ficcion"
-pelicula2  = Pelicula 2   "Inception"                         True      V.videoclub2      "Ficcion"
+pelicula2  = Pelicula 2   "Inception"                         False     V.videoclub2      "Ficcion"
 pelicula3  = Pelicula 3   "Inception"                         True      V.videoclub1      "Ficcion"
-pelicula4  = Pelicula 4   "The Call"                          True      V.videoclub1      "Miedo"
+pelicula4  = Pelicula 4   "The Call"                          False     V.videoclub1      "Miedo"
 pelicula5  = Pelicula 5   "Frozen"                            True      V.videoclub2      "Fantasia"
 pelicula6  = Pelicula 6   "Fight Club"                        False     V.videoclub2      "Accion"
 pelicula7  = Pelicula 7   "Now you see me"                    False     V.videoclub1      "Suspenso"
 pelicula8  = Pelicula 8   "Frozen"                            False     V.videoclub1      "Fantasia"
-pelicula9  = Pelicula 9   "The Call"                          False     V.videoclub2      "Miedo"
+pelicula9  = Pelicula 9   "The Call"                          True      V.videoclub2      "Miedo"
 pelicula10 = Pelicula 10  "Up"                                True      V.videoclub2      "Fantasia"
 
 peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9,pelicula10]
