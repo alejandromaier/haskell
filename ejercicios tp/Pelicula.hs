@@ -22,15 +22,15 @@ data Pelicula = Pelicula
 -- PARA MI ESTA MAL ACA LAS PELICULAS deberias ser como clientes, definirlas y luego usarlas, me parece.. <--VER
 
 --          |Tipo    |id |    titulo pelicula             | alquilada?| Videclub    |   categoria   |   cliente?  |
-pelicula1  = Pelicula 1   "At the Mountains of Madness"       True      V.videoclub1      "Ficcion"
+pelicula1  = Pelicula 1   "At the Mountains of Madness"       False      V.videoclub1      "Ficcion"
 pelicula2  = Pelicula 2   "The Case of Charles Dexter Ward"   True      V.videoclub1      "Ficcion"
-pelicula3  = Pelicula 3   "Herbert West -- The Re-animator"   True      V.videoclub1      "Ficcion"
+pelicula3  = Pelicula 3   "Herbert West -- The Re-animator"   False      V.videoclub1      "Ficcion"
 pelicula4  = Pelicula 4   "The Call"                          True      V.videoclub1      "Miedo"
 pelicula5  = Pelicula 5   "Frozen"                            True      V.videoclub2      "Fantasia"
 pelicula6  = Pelicula 6   "Fight Club"                        False     V.videoclub2      "Accion"
-pelicula7  = Pelicula 7   "At the Mountains of Madness"       False     V.videoclub1      "Ficcion"
+pelicula7  = Pelicula 7   "At the Mountains of Madness"       True     V.videoclub1      "Ficcion"
 pelicula8  = Pelicula 8   "Frozen"                            False     V.videoclub1      "Fantasia"
-pelicula9  = Pelicula 9   "The Call"                          False     V.videoclub2      "Miedo"
+pelicula9  = Pelicula 9   "The Call"                          True     V.videoclub2      "Miedo"
 
 peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9]
 
@@ -54,6 +54,7 @@ videoclubPelicula (Pelicula {_titulo =t, _videoclub=v,_alquilada=a}) = "La pelic
                                                                        ++"-> El estado de la pelicula es: "
                                                                        ++ estadoPelicula a
 -- categorias = 
+
 
 peliculas_na = filter (not . _alquilada) peliculas                                      --Devuelve una lista de peliculas que no estan alquiladas
 
