@@ -19,3 +19,8 @@ cliente9 = Cliente 9  "Amilcar"   "Rey"       20
 cliente10= Cliente 10 "Seba"      "Calderon"  20  
 
 clientes   = [cliente1, cliente2, cliente3, cliente4, cliente5, cliente6, cliente7, cliente8, cliente9, cliente10]
+
+tellCliente :: Cliente -> String
+tellCliente (Cliente {_id = i,_nombre = n, _apellido = a }) = "Cliente "++show i ++ ": " ++ a ++", "++ n
+
+listar_clientes         = mapM_  print $map (tellCliente)       clientes

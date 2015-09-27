@@ -8,66 +8,20 @@ import qualified Alquiler    as A
  
 -- Listas 
 
-listar_copias_peliculas = mapM_  print $map (copiasPelicula)    P.peliculas
-listar_clientes         = mapM_  print $map (tellCliente)       C.clientes
-listar_peliculas        = mapM_  print $map (tellPelicula)      P.peliculas
-listar_peliculas_vc     = mapM_  print $map (videoclubPelicula) P.peliculas
-listar_peliculas_na     = mapM_  print $map (peliculasNoAlquiladas) P.peliculas
+listar_clientes         = C.listar_clientes
+listar_peliculas        = P.listar_peliculas
+listar_copias_peliculas = P.listar_copias_peliculas
+listar_peliculas_vc     = P.listar_peliculas_vc
+listar_peliculas_na     = P.listar_peliculas_na
 
-peliculasNoAlquiladas :: P.Pelicula -> String
-peliculasNoAlquiladas (P.Pelicula {P._titulo=t,P._alquilada=a}) = if a == False then "Pelicula: "++t else ""
 --funciones
 -- elem :: (Eq a) => a -> [ a ] -> Bool
 -- elem unElemento unaLista = any (unElemento==) unaLista
-
---probando similar a las "funciones pro" de linea 112
--- listar thing = case thing of Cliente {_nombre = n, _apellido=a} -> n ++ " "++a
-                            
--- listarClientes = mapM_ print $map (listar) Cliente.clientes
-
-
-
---Funciones pro
-
-tellCliente :: C.Cliente -> String
-tellCliente (C.Cliente {C._id = i,C._nombre = n, C._apellido = a }) = "Cliente "++show i ++ ": " ++ a ++", "++ n
-
-tellPelicula :: P.Pelicula -> String
-tellPelicula (P.Pelicula {P._id = i, P._titulo = t, P._alquilada=a}) = "Pelicula "++ show i ++ ": " ++ t ++ " -> "++estadoPelicula a
-
-tituloPelicula :: P.Pelicula -> String
-tituloPelicula (P.Pelicula {P._titulo = t}) = t 
-
-copiasPelicula :: P.Pelicula -> String
-copiasPelicula (P.Pelicula {P._id = i,P._titulo = t}) = "Pelicula: "++ show i++ ": "++ t++ " | Cantidad de copias: "++ show(cantidad_copias t)
-
-videoclubPelicula :: P.Pelicula -> String
-videoclubPelicula (P.Pelicula {P._titulo =t, P._videoclub=v,P._alquilada=a}) = "La pelicula: "
-                                                                       ++t
-                                                                       ++ "-> se encuentra en el videclub: "
-                                                                       ++ V._nombre v 
-                                                                       ++"-> El estado de la pelicula es: " 
-                                                                       ++ estadoPelicula a
-
-
-estadoPelicula estado = if estado == True then " Disponible" else " No disponible"
-
---
-existe_pelicula titulo = find (==titulo) $map (tituloPelicula) P.peliculas
-cantidad_copias titulo = length $filter (==titulo) $map (tituloPelicula) P.peliculas 
-
-
-contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No existe esa pelicula"
-                                                          Just titulo -> titulo ++" tiene " ++ if (cantidad_copias titulo) == 1 
-                                                            then show(cantidad_copias titulo)++" copia." 
-                                                            else show (cantidad_copias titulo)++" copias."
-
                                                                                                                     
 -- buscar :: (Eq a) => a -> [a] -> a
 -- buscar nombre lista = map (==_nombre) clientes 
 
 -- buscar_en lista nombre = filter (==nombre) clientes
-
 
 -- Usados en otra funcion
 
