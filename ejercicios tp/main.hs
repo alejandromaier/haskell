@@ -7,13 +7,15 @@ import qualified Pelicula    as P
 import qualified Alquiler    as A
 
 -- Listas
-
+clientes                = C.clientes
 listar_clientes         = C.listar_clientes
+peliculas               = P.peliculas
 listar_peliculas        = P.listar_peliculas
-listar_copias_peliculas = P.listar_copias_peliculas
+-- listar_copias_peliculas = P.listar_copias_peliculas
 listar_peliculas_vc     = P.listar_peliculas_vc
 listar_peliculas_na     = P.listar_peliculas_na
-
+listar_categorias       = P.listar_categorias
+listar_pelicula_categoria=P.main
 --funciones
 -- elem :: (Eq a) => a -> [ a ] -> Bool
 -- elem unElemento unaLista = any (unElemento==) unaLista
