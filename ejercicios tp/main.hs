@@ -14,6 +14,7 @@ listar_copias_peliculas = P.listar_copias_peliculas
 listar_peliculas_vc     = P.listar_peliculas_vc
 listar_peliculas_na     = P.listar_peliculas_na
 
+
 --funciones
 -- elem :: (Eq a) => a -> [ a ] -> Bool
 -- elem unElemento unaLista = any (unElemento==) unaLista
@@ -48,7 +49,7 @@ listar_peliculas_na     = P.listar_peliculas_na
 -- •     Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
 -- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
 -- •     DisponibleParaAlquilar, que indica si una película esta disponible para ser alquilada en el videoclub (por ejemplo, una película puede estar en un videoclub pero no estar disponible porque todas sus copias están alquiladas, o no estar disponible porque no esta en el catálogo).
--- •     CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
+-- •   y  CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
 
 -- Especificar y definir las siguientes funciones:
 -- 1.    disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.

@@ -11,7 +11,7 @@ data Pelicula = Pelicula
       , _alquilada   :: Bool
       , _videoclub   :: V.VideoClub
       , _categoria   :: String
-      } deriving Show
+      } deriving (Eq,Show,Ord)
 -- Ingreso de datos
 
 -- main = do putStrLn "Titulo de la pelicula:"
@@ -51,7 +51,7 @@ groupPeliculas = groupToMap _categoria
 -- peliculaCategories = foldr Set.insert Set.empty . map _categoria
 
 peliculaCategorias :: [Pelicula] -> [String]
-peliculaCategories = nub . map _categoria
+peliculaCategorias = nub . map _categoria
 
 tituloPeliculas :: Pelicula -> String
 tituloPeliculas (Pelicula {_titulo = t}) = "Titulo: "++t
@@ -70,9 +70,12 @@ videoclubPelicula (Pelicula {_titulo =t, _videoclub=v,_alquilada=a}) = "La pelic
                                                                        ++ "-> se encuentra en el videclub: "
                                                                        ++ V._nombre v ++"-> El estado de la pelicula es: " ++ estadoPelicula a
 
+-- buscarPorCategoria ::  Map.Map String [Pelicula] -> [Pelicula]
+-- buscarPorCategoria (grupo{String=s,[Pelicula]=p}) = "Hola"
 
 
--- categorias =
+-- peliculas_por_categoria categoria = filter (==categoria) $groupPeliculas peliculas
+grupo = groupPeliculas peliculas
 
 peliculas_na = filter (not . _alquilada) peliculas                                      --Devuelve una lista de peliculas que no estan alquiladas
 
@@ -88,6 +91,7 @@ contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No exi
                                                           Just titulo -> titulo ++" tiene " ++ if (cantidad_copias titulo) == 1
                                                             then show(cantidad_copias titulo)++" copia."
                                                             else show (cantidad_copias titulo)++" copias."
+
 
 listar_categorias       = mapM_  print $peliculaCategorias          peliculas
 listar_copias_peliculas = mapM_  print $map (copiasPelicula)        peliculas
