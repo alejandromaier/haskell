@@ -11,13 +11,13 @@ data Alquiler = Alquiler
       , _pelicula    :: P.Pelicula
       } deriving (Eq,Show,Ord)
 
+
 alquileres = [alquiler1,alquiler2,alquiler3]
 
 alquilerDatos :: Alquiler -> String
 alquilerDatos (Alquiler{_id=i,_videoclub=v,_cliente=c,_pelicula=p}) = show i ++"-"
                                                     ++"El cliente "++C.nombreApellidoCliente c++" alquilo la pelicula '"++P.tituloPelicula p
                                                     ++"' en el videoclub '"++V.nombreVideoClub v++"'"
-
 
 
 alquiler1 = Alquiler 1 V.videoclub1 C.cliente1 P.pelicula1

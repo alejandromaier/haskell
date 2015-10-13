@@ -46,12 +46,12 @@ listar_peliculas_categoria= P.menu
 -- •   y  CantidadDeCopiasPelicula, que devuelve cuantas copias de una película tiene el videoclub (esta función se indefine, o sea da error, si la película no pertenece al catalogo del videoclub).
 -- •   n  CantidadDeCopias, que devuelve una lista con las películas y cuantas copias  tiene el videoclub.
 -- •   y  PelículasNoAlquiladas, que devuelve una lista de películas que no han sido alquiladas.
--- •     peliculasPorCategoria, que devuelve un listado de películas por categoría seleccionada.*
+-- •   y  peliculasPorCategoria, que devuelve un listado de películas por categoría seleccionada.*
 -- •     PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). El cliente puede alquilar más de una copia de la misma película.
 -- •     Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
 -- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
 -- •     DisponibleParaAlquilar, que indica si una película esta disponible para ser alquilada en el videoclub (por ejemplo, una película puede estar en un videoclub pero no estar disponible porque todas sus copias están alquiladas, o no estar disponible porque no esta en el catálogo).
--- •     CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
+-- •   y  CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
 
 -- Especificar y definir las siguientes funciones:
 -- 1.    disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
