@@ -6,7 +6,7 @@ data VideoClub = VideoClub
       , _nombre      :: String
       , _direccion   :: String
       , _clientes    :: [C.Cliente]
-      } deriving Show
+      } deriving (Eq,Show,Ord)
 
 videoclub1 = VideoClub 1 "VHS Movies"           "25 de mayo 333"  []  
 videoclub2 = VideoClub 2 "All the movies 4 you" "9 de julio 128"  []

@@ -12,7 +12,7 @@ data Pelicula = Pelicula
       , _alquilada   :: Bool
       , _videoclub   :: V.VideoClub
       , _categoria   :: String
-      } deriving Show
+      } deriving (Eq,Show,Ord)
 -- Ingreso de datos
 
 -- main = do putStrLn "Titulo de la pelicula:"

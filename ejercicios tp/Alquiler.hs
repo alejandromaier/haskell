@@ -9,7 +9,7 @@ data Alquiler = Alquiler
       , _videoclub   :: V.VideoClub
       , _cliente     :: C.Cliente
       , _pelicula    :: P.Pelicula
-      } deriving Show
+      } deriving (Eq,Show,Ord)
 
 alquileres = [alquiler1,alquiler2,alquiler3]
 
