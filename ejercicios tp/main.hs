@@ -7,13 +7,15 @@ import qualified Pelicula    as P
 import qualified Alquiler    as A
 
 -- Listas
-
-listar_clientes         = C.listar_clientes
+clientes                = C.clientes
+listar_clientes         = V.clientes
+peliculas               = P.peliculas
 listar_peliculas        = P.listar_peliculas
-listar_copias_peliculas = P.listar_copias_peliculas
+-- listar_copias_peliculas = P.listar_copias_peliculas
 listar_peliculas_vc     = P.listar_peliculas_vc
 listar_peliculas_na     = P.listar_peliculas_na
-
+listar_categorias       = P.listar_categorias
+listar_peliculas_categoria= P.menu
 
 --funciones
 -- elem :: (Eq a) => a -> [ a ] -> Bool
@@ -44,7 +46,7 @@ listar_peliculas_na     = P.listar_peliculas_na
 -- •   y  CantidadDeCopiasPelicula, que devuelve cuantas copias de una película tiene el videoclub (esta función se indefine, o sea da error, si la película no pertenece al catalogo del videoclub).
 -- •   n  CantidadDeCopias, que devuelve una lista con las películas y cuantas copias  tiene el videoclub.
 -- •   y  PelículasNoAlquiladas, que devuelve una lista de películas que no han sido alquiladas.
--- •     peliculasPorCategoria, que devuelve un listado de películas por categoría seleccionada.*
+-- •   y  peliculasPorCategoria, que devuelve un listado de películas por categoría seleccionada.*
 -- •     PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). El cliente puede alquilar más de una copia de la misma película.
 -- •     Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
 -- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
