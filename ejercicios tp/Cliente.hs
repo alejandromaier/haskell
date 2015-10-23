@@ -27,7 +27,7 @@ tellCliente :: Cliente -> String
 tellCliente (Cliente {_id = i,_nombre = n, _apellido = a }) = "Cliente "++ show i ++ ": " ++ a ++", "++ n
 
 listaCliente :: Cliente -> String
-listaCliente (Cliente {_id = i,_nombre = n, _apellido = a }) = "Cliente "++ ": " ++ a ++", "++ n
+listaCliente (Cliente {_id = i,_nombre = n, _apellido = a }) = "Cliente: " ++ a ++", "++ n
 
 listar_clientes         = mapM_  print $map (listaCliente)       clientes
 

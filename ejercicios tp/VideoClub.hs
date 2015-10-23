@@ -1,5 +1,7 @@
 module VideoClub where
 import qualified Cliente as C
+import qualified Pelicula as P
+import Data.List
 
 
 data VideoClub = VideoClub
@@ -7,11 +9,12 @@ data VideoClub = VideoClub
       , _nombre      :: String
       , _direccion   :: String
       , _clientes    :: [C.Cliente]
+      , _peliculas   :: [P.Pelicula]
       } deriving (Eq,Show,Ord)
 
-videoclub1 = VideoClub 1 "VHS Movies"           "25 de mayo 333"  [C.cliente1,C.cliente2,C.cliente3]
-videoclub2 = VideoClub 2 "All the movies 4 you" "9 de julio 128"  [C.cliente4,C.cliente5,C.cliente6]
-videoclub3 = VideoClub 3 "Hollywood movies"     "Buenos Aires 24" [C.cliente7,C.cliente8,C.cliente9,C.cliente10]
+videoclub1 = VideoClub 1 "VHS Movies"           "25 de mayo 333"  [C.cliente1,C.cliente2,C.cliente3]             [P.pelicula1,P.pelicula2,P.pelicula3,P.pelicula10]
+videoclub2 = VideoClub 2 "All the movies 4 you" "9 de julio 128"  [C.cliente4,C.cliente5,C.cliente6]             [P.pelicula5,P.pelicula4,P.pelicula6,P.pelicula11,P.pelicula13]
+videoclub3 = VideoClub 3 "Hollywood movies"     "Buenos Aires 24" [C.cliente7,C.cliente8,C.cliente9,C.cliente10] [P.pelicula7,P.pelicula8,P.pelicula9,P.pelicula12,P.pelicula14]
 
 videoclubs  = [videoclub1,videoclub2,videoclub3]
 
@@ -21,9 +24,12 @@ indiceVideoClub (VideoClub {_id=i,_nombre=n})= show i ++ ": " ++n ++ "\n"
 nombreVideoClub :: VideoClub -> String
 nombreVideoClub (VideoClub {_id=i,_nombre=n})= n
 
--- el videoclub tendra que tener las peliculas ????????
--- listar_peliculas_cliente videoclub cliente = mapM_ print $map () -- <------- VER COMO HACER..
+peliculas_vc videoclub = _peliculas (videoclub)
+
+
 listar_clientes videoclub = mapM_ print $map (C.tellCliente) $_clientes (videoclub)
+listar_peliculas videoclub = mapM_ print $map (P.tellPelicula) $_peliculas (videoclub)
+listar_peliculas_disponibles videoclub = mapM_ print $map (P.tellPelicula) $filter (not . P._alquilada) $_peliculas (videoclub)
 listar_videoclubs = mapM_ print $map (indiceVideoClub) videoclubs
 
 clientes :: IO ()
@@ -32,15 +38,15 @@ clientes = do listar_videoclubs
               x <- readLn
               listar_clientes $videoclubs !! pred x
 
-peliculas :: IO ()
-peliculas = do listar_videoclubs
-               putStrLn "Ingrese el numero de un videoclub: "
-               x <- readLn
-               let videoclub = videoclubs !! pred x
-               listar_clientes videoclub
-               putStrLn "Ingrese el numero de un cliente"
-               -- b <- readLn -- cliente
-               -- let cliente = C.clientes !! pred b
-               -- -- listar_peliculas_cliente cliente videoclub
 
-              --  listar_peliculas_cliente videoclub cliente --se lista las peliculas del cliente en ese videoclub
+cargar :: IO ()
+cargar = do putStrLn "Ingresado datos pelicula:"
+            putStrLn "Titulo:"
+            titulo <- getLine
+            putStrLn "Ingrese Categoria: "
+            P.listar_categorias_indices
+            cat <- getLine
+            let pelicula = P.Pelicula (length P.peliculas + 1) titulo False cat
+            let peliculas' = P.peliculas ++ [pelicula]
+            putStrLn "Pelicula cargada.."
+            mapM_ print $map (P.estadoPeliculas) peliculas'
