@@ -1,21 +1,64 @@
 module Main where
 
+import System.Process
 import Data.List
 import qualified VideoClub   as V
 import qualified Cliente     as C
 import qualified Pelicula    as P
 import qualified Alquiler    as A
 
+
 -- Listas
-clientes                = C.clientes
-listar_clientes         = V.clientes
-peliculas               = P.peliculas
-listar_peliculas        = P.listar_peliculas
+clientes                   = C.clientes
+listar_clientes            = C.listar_clientes
+peliculas                  = P.listar_peliculas
+listar_peliculas           = P.listar_peliculas
 -- listar_copias_peliculas = P.listar_copias_peliculas
-listar_peliculas_vc     = P.listar_peliculas_vc
-listar_peliculas_na     = P.listar_peliculas_na
-listar_categorias       = P.listar_categorias
-listar_peliculas_categoria= P.menu
+listar_peliculas_vc        = P.listar_peliculas_vc
+listar_peliculas_na        = P.listar_peliculas_na
+listar_categorias          = P.listar_categorias
+listar_peliculas_categoria = P.menu
+listar_videoclubs          = V.listar_videoclubs
+
+salir = undefined
+lista_ejercicios = putStrLn "Lista de ejercicios"
+
+-- clearScreen :: IO ()
+-- clearScreen = putStrLn ""
+
+opciones :: [(Int, (String, IO ()))]
+opciones = zip [1..5] [
+    ("Listas de los ejercicios", lista_ejercicios)
+    , ("Listar videoclubs",listar_videoclubs)
+    , ("Listas peliculas de todos los videoclubs",listar_peliculas)
+    , ("Listar todos los clientes",listar_clientes)
+    , ("Salir",salir)]
+
+menu :: IO ()
+menu = do
+      -- clearScreen
+      putStrLn "Menu Principal.-"
+      putStrLn "Opciones:"
+      putStrLn . unlines $ map concatIndice opciones
+      opcion <- getLine
+      case validar opcion of
+         Just n  -> ejecutar . read $ opcion
+         Nothing -> putStrLn "Pruebe otra vez."
+
+      menu
+   where concatIndice (i, (s, _)) = show i ++ ".) " ++ s
+
+validar :: String -> Maybe Int
+validar s = esValido (reads s)
+   where esValido []           = Nothing
+         esValido ((n, _):_) 
+               | sobrepasa   n = Nothing
+               | otherwise     = Just n
+         sobrepasa n = (n < 1) || (n > length opciones)
+
+ejecutar :: Int -> IO ()
+ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
+   where ejecuta ((_, (_,f)):_) = f
 
 --funciones
 -- elem :: (Eq a) => a -> [ a ] -> Bool

@@ -28,8 +28,7 @@ alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquil
 alquilerDatos :: Alquiler -> String
 alquilerDatos (Alquiler{_id=i,_videoclub=v,_cliente=c,_pelicula=p}) = show i ++"-"
                                                     ++"El cliente "++C.nombreApellidoCliente c++" alquilo la pelicula '"++P.tituloPelicula p
-                                                    ++"' en el videoclub '"++V.nombreVideoClub v++"'"
-
+                                                    ++"' en el videoclub '"++V.nombreVideoClub v
 listar_alquileres = mapM_ print $map (alquilerDatos) alquileres
 
 alquilada pelis = find (not . P._alquilada) pelis
@@ -58,4 +57,5 @@ alquiler = do putStrLn "Ingresando Datos Alquiler.."
                         let alquileres' = alquileres ++ [alquiler]
                         putStrLn "Alquiler cargado.."
                         mapM_ print $map (alquilerDatos) alquileres'
+
 
