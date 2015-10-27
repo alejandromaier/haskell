@@ -27,8 +27,10 @@ nombreVideoClub (VideoClub {_id=i,_nombre=n})= n
 peliculas_vc videoclub = _peliculas (videoclub)
 
 
+
+
 listar_clientes videoclub = mapM_ print $map (C.tellCliente) $_clientes (videoclub)
-listar_peliculas videoclub = mapM_ print $map (P.tellPelicula) $_peliculas (videoclub)
+listar_peliculas videoclub = mapM_ print $map P.concatIndice $P.zipeando $P.peliculaNombre $_peliculas (videoclub)
 listar_peliculas_disponibles videoclub = mapM_ print $map (P.tellPelicula) $filter (not . P._alquilada) $_peliculas (videoclub)
 listar_videoclubs = mapM_ print $map (indiceVideoClub) videoclubs
 
@@ -50,3 +52,19 @@ cargar = do putStrLn "Ingresado datos pelicula:"
             let peliculas' = P.peliculas ++ [pelicula]
             putStrLn "Pelicula cargada.."
             mapM_ print $map (P.estadoPeliculas) peliculas'
+
+copias_p :: IO () 
+copias_p = do putStrLn "Videoclubs:"
+              listar_videoclubs
+              putStrLn "Ingrese el numero de un videoclub:"
+              x <- readLn
+              let videoclub = videoclubs !! pred x
+              let pelis = _peliculas videoclub 
+              let p_indice = P.peliculaNombre pelis             
+              putStrLn "Ingrese el numero de una Pelicula:"
+              listar_peliculas videoclub
+              p <- readLn
+              let pelicula = p_indice !! pred p
+              let copias = length $filter (==pelicula) $map (P.tituloPelicula) pelis
+              print copias
+

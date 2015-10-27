@@ -24,8 +24,8 @@ data Pelicula = Pelicula
 -- PARA MI ESTA MAL ACA LAS PELICULAS deberias ser como clientes, definirlas y luego usarlas, me parece.. <--VER
 
 --          |Tipo    |id |    titulo pelicula             | alquilada?| Videclub    |   categoria
-pelicula1  = Pelicula 1   "Inception"                         True            "Ficcion"
-pelicula2  = Pelicula 2   "Inception"                         True            "Ficcion"
+pelicula1  = Pelicula 1   "Inception"                         False            "Ficcion"
+pelicula2  = Pelicula 2   "Inception"                         False            "Ficcion"
 pelicula3  = Pelicula 3   "Inception"                         True            "Ficcion"
 pelicula4  = Pelicula 4   "The Call"                          True            "Miedo"
 pelicula5  = Pelicula 5   "Frozen"                            True            "Fantasia"
@@ -63,6 +63,9 @@ groupToMap toKey = Map.fromListWith (++) . map (\a -> (toKey a, [a]))
 
 peliculaCategorias :: [Pelicula] -> [String]
 peliculaCategorias = nub . map _categoria
+
+peliculaNombre :: [Pelicula] -> [String]
+peliculaNombre = nub . map _titulo
 
 tituloPeliculas :: Pelicula -> String
 tituloPeliculas (Pelicula {_titulo = t}) = "Titulo: "++t
@@ -102,6 +105,7 @@ existe_pelicula titulo = find (==titulo) $map (tituloPelicula) peliculas        
 
 cantidad_copias titulo = length $filter (==titulo) $map (tituloPelicula) peliculas      --Devuelve el numero de copias de una pelicula segun el titulo
 
+
 contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No existe esa pelicula"
                                                           Just titulo -> titulo ++" tiene " ++ if (cantidad_copias titulo) == 1
                                                             then show(cantidad_copias titulo)++" copia."
@@ -117,9 +121,16 @@ listar_categorias_indices= mapM_ print categorias_indices
 listar_categorias       = mapM_  print $categorias_ordenadas         peliculas
 -- listar_copias_peliculas = mapM_  print $map (copiasPelicula)        peliculas --arreglar que tenga en cuenta el videoclub
 
+zipeando :: [String] -> [(Integer,(String))]
+zipeando = zip [1..] 
+
+concatIndice (i, (s)) = show i ++ ".) " ++ s
+
+
 listar_peliculas        = mapM_  print $map (tellPelicula)          peliculas
 listar_peliculas_vc     = mapM_  print $map (estadoPeliculas)       peliculas
 listar_peliculas_na     = mapM_  print $map (tituloPeliculas)       peliculas_na
+listar_peliculas_indice = mapM_ print  $map concatIndice $zipeando $peliculaNombre peliculas
 
 menu :: IO ()
 menu = do listar_categorias_indices

@@ -108,8 +108,4 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 
 -- Objetivos Adicionales de la práctica. Conseguir hacer funciones para añadir datos dinámicos como videoclubs, clientes y películas.
 
--- main = do putStrLn "What is 2 + 2?"
---           x <- readLn
---           if x == 4
---               then putStrLn "You're right!"
---               else putStrLn "You're wrong!"
+
