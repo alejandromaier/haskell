@@ -2,6 +2,7 @@ module Pelicula where
 import Data.List
 import System.IO
 import System.Process
+-- import AnsiScreen
 import qualified Data.Map as Map
 import qualified Data.Set as Set
 
@@ -26,18 +27,18 @@ data Pelicula = Pelicula
 --          |Tipo    |id |    titulo pelicula             | alquilada?| Videclub    |   categoria
 pelicula1  = Pelicula 1   "Inception"                         False            "Ficcion"
 pelicula2  = Pelicula 2   "Inception"                         False            "Ficcion"
-pelicula3  = Pelicula 3   "Inception"                         True            "Ficcion"
-pelicula4  = Pelicula 4   "The Call"                          True            "Miedo"
-pelicula5  = Pelicula 5   "Frozen"                            True            "Fantasia"
-pelicula6  = Pelicula 6   "Fight Club"                        True            "Accion"
-pelicula7  = Pelicula 7   "Now you see me"                    True            "Suspenso"
-pelicula8  = Pelicula 8   "Frozen"                            True            "Fantasia"
-pelicula9  = Pelicula 9   "The Call"                          True            "Miedo"
-pelicula10 = Pelicula 10  "Up"                                True            "Fantasia"
-pelicula11 = Pelicula 11  "Safe House"                        False           "Suspenso"
-pelicula12 = Pelicula 12  "Transformers 1"                    False           "Accion"
-pelicula13 = Pelicula 13  "Transformers 2"                    False           "Accion"
-pelicula14 = Pelicula 14  "Transformers "                     False           "Accion"
+pelicula3  = Pelicula 3   "Inception"                         True             "Ficcion"
+pelicula4  = Pelicula 4   "The Call"                          True             "Miedo"
+pelicula5  = Pelicula 5   "Frozen"                            True             "Fantasia"
+pelicula6  = Pelicula 6   "Fight Club"                        True             "Accion"
+pelicula7  = Pelicula 7   "Now you see me"                    True             "Suspenso"
+pelicula8  = Pelicula 8   "Frozen"                            True             "Fantasia"
+pelicula9  = Pelicula 9   "The Call"                          True             "Miedo"
+pelicula10 = Pelicula 10  "Up"                                True             "Fantasia"
+pelicula11 = Pelicula 11  "Safe House"                        False            "Suspenso"
+pelicula12 = Pelicula 12  "Transformers 1"                    False            "Accion"
+pelicula13 = Pelicula 13  "Transformers 2"                    False            "Accion"
+pelicula14 = Pelicula 14  "Transformers "                     False            "Accion"
 
 peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9,pelicula10,pelicula11,pelicula12,pelicula13,pelicula14]
 
@@ -87,7 +88,7 @@ estadoPeliculas (Pelicula {_titulo =t, _alquilada=a}) = "La pelicula: " ++t
 agrupar_peliculas_categoria = groupBy agruparPorCat $ sortBy (\x y -> _categoria x `compare` _categoria y) peliculas
 -- agrupar_peliculas_videoclub = groupBy agruparPorVC $ sortBy (\x y -> _videoclub x `compare` _videoclub y) peliculas --peliculas en videoclub
 
-categorias_indices = zip [1..(categorias_count)] $categorias_ordenadas peliculas  --Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
+categorias_indices = zip [1..] $categorias_ordenadas peliculas  --Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
 
 categorias = peliculaCategorias peliculas
 
@@ -132,10 +133,42 @@ listar_peliculas_vc     = mapM_  print $map (estadoPeliculas)       peliculas
 listar_peliculas_na     = mapM_  print $map (tituloPeliculas)       peliculas_na
 listar_peliculas_indice = mapM_ print  $map concatIndice $zipeando $peliculaNombre peliculas
 
-menu :: IO ()
-menu = do listar_categorias_indices
-          putStrLn "Ingrese el numero de una categoria: "
-          x <- readLn
-          peliculas_por_categoria $ pred x
+validar :: String -> Maybe Int
+validar s = esValido (reads s)
+   where esValido []           = Nothing
+         esValido ((n, _):_) 
+               | sobrepasa   n = Nothing
+               | otherwise     = Just n
+         sobrepasa n = (n < 0) || (n > length categorias)
 
+listarPeliculasPorCategoria :: IO()
+listarPeliculasPorCategoria = do listar_categorias_indices
+                                 putStrLn "Ingrese el numero de una categoria: "
+                                 putStrLn "Presione 0 (cero) para salir."
+                                 x <- getLine
+                                 case validar x of 
+                                    Just n  -> if n == 0 then undefined else  peliculas_por_categoria $ pred n
+                                    Nothing -> putStrLn "Pruebe otra vez."              
+                                 listarPeliculasPorCategoria
 
+cargarPelicula :: [Pelicula] -> IO [Pelicula]
+cargarPelicula peliculas = 
+  do putStrLn "Carga de peliculas: " 
+     titulo <- getLine
+     putStrLn "Ingrese la categoria: "
+     cat <- getLine
+     let pelicula = Pelicula (length peliculas + 1) titulo False cat
+     let pelis' = peliculas ++ [pelicula]
+     return pelis'
+
+menu :: [Pelicula] -> IO [Pelicula]
+menu peliculas = do
+  str <- getLine
+  case read str of
+    1 -> do peliculas' <- cargarPelicula peliculas             
+            menu peliculas'
+    2 -> listarPeliculasPorCategoria >> menu peliculas 
+    3 -> return peliculas 
+
+-- clearScreen :: IO ()
+-- clearScreen = putStr cls

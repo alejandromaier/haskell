@@ -41,30 +41,35 @@ clientes = do listar_videoclubs
               listar_clientes $videoclubs !! pred x
 
 
-cargar :: IO ()
-cargar = do putStrLn "Ingresado datos pelicula:"
-            putStrLn "Titulo:"
-            titulo <- getLine
-            putStrLn "Ingrese Categoria: "
-            P.listar_categorias_indices
-            cat <- getLine
-            let pelicula = P.Pelicula (length P.peliculas + 1) titulo False cat
-            let peliculas' = P.peliculas ++ [pelicula]
-            putStrLn "Pelicula cargada.."
-            mapM_ print $map (P.estadoPeliculas) peliculas'
+-- cargar :: IO ()
+-- cargar = do putStrLn "Ingresando datos pelicula:"
+--             putStrLn "Titulo:"
+--             titulo <- getLine
+--             putStrLn "Ingrese Categoria: "
+--             P.listar_categorias_indices
+--             cat <- getLine
+--             let pelicula = P.Pelicula (length P.peliculas + 1) titulo False cat
+--             let peliculas' = P.peliculas ++ [pelicula]
+--             putStrLn "Pelicula cargada.."
+--             mapM_ print $map (P.estadoPeliculas) peliculas'
+
+-- v_clubs = do putStrLn "Videoclubs"
+--              listar_videoclubs
+--              putStrLn "Ingrese el numero de un videoclub"
+--              x <- readLn
+--              let videoclub = videoclubs !! pred x
+--              return videoclub
 
 copias_p :: IO () 
-copias_p = do putStrLn "Videoclubs:"
-              listar_videoclubs
-              putStrLn "Ingrese el numero de un videoclub:"
-              x <- readLn
-              let videoclub = videoclubs !! pred x
+copias_p = do let videoclub = videoclub3
               let pelis = _peliculas videoclub 
               let p_indice = P.peliculaNombre pelis             
               putStrLn "Ingrese el numero de una Pelicula:"
               listar_peliculas videoclub
               p <- readLn
               let pelicula = p_indice !! pred p
-              let copias = length $filter (==pelicula) $map (P.tituloPelicula) pelis
-              print copias
+              let copias = show $length $filter (==pelicula) $map (P.tituloPelicula) pelis
+              let pcopias= "Pelicula: "++ pelicula ++", copias: "++ copias
+              putStrLn pcopias
+
 
