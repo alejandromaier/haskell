@@ -154,21 +154,29 @@ listarPeliculasPorCategoria = do listar_categorias_indices
 cargarPelicula :: [Pelicula] -> IO [Pelicula]
 cargarPelicula peliculas = 
   do putStrLn "Carga de peliculas: " 
+     putStrLn "Titulo:"
      titulo <- getLine
-     putStrLn "Ingrese la categoria: "
+     putStrLn "Categoria: "
      cat <- getLine
      let pelicula = Pelicula (length peliculas + 1) titulo False cat
      let pelis' = peliculas ++ [pelicula]
      return pelis'
 
+opciones :: [(Int,(String))]
+opciones = zip [1..] [("Cargar Pelicula"),("Listar peliculas por categoria"),("Devolver peliculas"),("Salir")]
+
 menu :: [Pelicula] -> IO [Pelicula]
 menu peliculas = do
+  putStrLn "Eliga su opcion: "
+  putStrLn . unlines $ map concatIndice opciones
   str <- getLine
   case read str of
     1 -> do peliculas' <- cargarPelicula peliculas             
             menu peliculas'
-    2 -> listarPeliculasPorCategoria >> menu peliculas 
-    3 -> return peliculas 
+    2 -> putStrLn "Categorias: " >> listarPeliculasPorCategoria >> menu peliculas 
+    3 -> return peliculas
+    4 -> undefined
+    _ -> putStrLn "Pruebe otra vez." >> menu peliculas
 
 -- clearScreen :: IO ()
 -- clearScreen = putStr cls
