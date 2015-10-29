@@ -109,7 +109,13 @@ peliculasPorCategoria categoria = length $filter (==categoria) $map (nombreCateg
 
 cantidadDePeliculasPorCategoria = map (peliculasPorCategoria) categorias
 
-listado_a_medias = zip P.categorias P.cantidadDePeliculasPorCategoria
+listado_a_medias :: [(String,Int)]
+listado_a_medias = zip categorias cantidadDePeliculasPorCategoria
+
+cat (s, i) = s ++ " - Cantidad de peliculas: " ++ show i
+
+mostrarCategoriasCantPeliculas =  mapM_ print >>  $ map cat listado_a_medias
+
 
 
 -- **************** --
