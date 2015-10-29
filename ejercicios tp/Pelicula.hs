@@ -85,12 +85,12 @@ estadoPeliculas (Pelicula {_titulo =t, _alquilada=a}) = "La pelicula: " ++t
                                                                        ++ "-> El estado de la pelicula es: " ++ estadoPelicula a
 
 
-agrupar_peliculas_categoria = groupBy agruparPorCat $ sortBy (\x y -> _categoria x `compare` _categoria y) peliculas
+agrupar_peliculas_categoria p = groupBy agruparPorCat $ sortBy (\x y -> _categoria x `compare` _categoria y) p
 -- agrupar_peliculas_videoclub = groupBy agruparPorVC $ sortBy (\x y -> _videoclub x `compare` _videoclub y) peliculas --peliculas en videoclub
 
-categorias_indices = zip [1..] $categorias_ordenadas peliculas  --Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
+categorias_indices p = zip [1..] $categorias_ordenadas p  --Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
 
-categorias = peliculaCategorias peliculas
+categorias p = peliculaCategorias p
 
 categorias_ordenadas x = sortBy (\x y -> x `compare` y )$peliculaCategorias x
 
@@ -116,9 +116,9 @@ contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No exi
 -- listar_categorias       = mapM_  print $peliculaCategorias          peliculas
 listar_copias_peliculas = mapM_  print $map (copiasPelicula)        peliculas
 
-peliculas_por_categoria x = mapM_ print $nub . map (tituloPelicula) $agrupar_peliculas_categoria !! x
+peliculas_por_categoria x p = mapM_ print $nub . map (tituloPelicula) $(agrupar_peliculas_categoria p) !! x
 
-listar_categorias_indices= mapM_ print categorias_indices
+listar_categorias_indices p= mapM_ print $categorias_indices p
 listar_categorias       = mapM_  print $categorias_ordenadas         peliculas
 -- listar_copias_peliculas = mapM_  print $map (copiasPelicula)        peliculas --arreglar que tenga en cuenta el videoclub
 
@@ -133,23 +133,23 @@ listar_peliculas_vc     = mapM_  print $map (estadoPeliculas)       peliculas
 listar_peliculas_na     = mapM_  print $map (tituloPeliculas)       peliculas_na
 listar_peliculas_indice = mapM_ print  $map concatIndice $zipeando $peliculaNombre peliculas
 
-validar :: String -> Maybe Int
-validar s = esValido (reads s)
+validar :: String -> [Pelicula] -> Maybe Int
+validar s p = esValido (reads s)
    where esValido []           = Nothing
          esValido ((n, _):_) 
                | sobrepasa   n = Nothing
                | otherwise     = Just n
-         sobrepasa n = (n < 0) || (n > length categorias)
+         sobrepasa n = (n < 0) || (n > length categorias p)
 
-listarPeliculasPorCategoria :: IO()
-listarPeliculasPorCategoria = do listar_categorias_indices
-                                 putStrLn "Ingrese el numero de una categoria: "
-                                 putStrLn "Presione 0 (cero) para salir."
-                                 x <- getLine
-                                 case validar x of 
-                                    Just n  -> if n == 0 then undefined else  peliculas_por_categoria $ pred n
-                                    Nothing -> putStrLn "Pruebe otra vez."              
-                                 listarPeliculasPorCategoria
+listarPeliculasPorCategoria :: [Pelicula] -> IO ()
+listarPeliculasPorCategoria p = do listar_categorias_indices p
+                                   putStrLn "Ingrese el numero de una categoria: "
+                                   putStrLn "Presione 0 (cero) para salir."
+                                   x <- getLine
+                                   case validar x,p of 
+                                      Just n  -> if n == 0 then undefined else  peliculas_por_categoria (pred n) p
+                                      Nothing -> putStrLn "Pruebe otra vez."              
+                                   listarPeliculasPorCategoria peliculas
 
 cargarPelicula :: [Pelicula] -> IO [Pelicula]
 cargarPelicula peliculas = 
@@ -173,7 +173,7 @@ menu peliculas = do
   case read str of
     1 -> do peliculas' <- cargarPelicula peliculas             
             menu peliculas'
-    2 -> putStrLn "Categorias: " >> listarPeliculasPorCategoria >> menu peliculas 
+    2 -> putStrLn "Categorias: " >> listarPeliculasPorCategoria peliculas >> menu peliculas 
     3 -> return peliculas
     4 -> undefined
     _ -> putStrLn "Pruebe otra vez." >> menu peliculas

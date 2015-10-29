@@ -58,4 +58,5 @@ alquiler = do putStrLn "Ingresando Datos Alquiler.."
                         putStrLn "Alquiler cargado.."
                         mapM_ print $map (alquilerDatos) alquileres'
 
+                        
 
