@@ -85,6 +85,14 @@ estadoPeliculas (Pelicula {_titulo =t, _alquilada=a}) = "La pelicula: " ++t
                                                                        ++ "-> El estado de la pelicula es: " ++ estadoPelicula a
 
 
+
+-- **************** --
+--    categorias    --
+-- **************** --
+
+nombreCategoria :: Pelicula -> String
+nombreCategoria (Pelicula {_categoria = t}) = t
+
 agrupar_peliculas_categoria = groupBy agruparPorCat $ sortBy (\x y -> _categoria x `compare` _categoria y) peliculas
 -- agrupar_peliculas_videoclub = groupBy agruparPorVC $ sortBy (\x y -> _videoclub x `compare` _videoclub y) peliculas --peliculas en videoclub
 
@@ -94,11 +102,27 @@ categorias = peliculaCategorias peliculas
 
 categorias_ordenadas x = sortBy (\x y -> x `compare` y )$peliculaCategorias x
 
+categorias_count = length categorias -1
+
+--peliculasPorCategoria :: [String] -> Int
+peliculasPorCategoria categoria = length $filter (==categoria) $map (nombreCategoria) peliculas
+
+cantidadDePeliculasPorCategoria = map (peliculasPorCategoria) categorias
+
+listado_a_medias = zip P.categorias P.cantidadDePeliculasPorCategoria
+
+
+-- **************** --
+--    peliculas     --
+-- **************** --
+
+
+
+
+
 peliculas_na = filter (not . _alquilada) peliculas                                      --Devuelve una lista de peliculas que no estan alquiladas
 
 peliculas_count = length peliculas -1                                                   --Devuelve el numero de peliculas que hay, como valor utilizable
-
-categorias_count = length categorias -1
 
 estadoPelicula estado = if estado == False then " Disponible" else " No disponible"
 
@@ -178,5 +202,6 @@ menu peliculas = do
     4 -> undefined
     _ -> putStrLn "Pruebe otra vez." >> menu peliculas
 
+--cantidadDePeliculasPorCategoria = 
 -- clearScreen :: IO ()
 -- clearScreen = putStr cls
