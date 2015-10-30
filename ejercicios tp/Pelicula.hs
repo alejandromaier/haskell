@@ -12,19 +12,11 @@ data Pelicula = Pelicula
       , _alquilada   :: Bool
       , _categoria   :: String
       } deriving (Eq,Show,Ord)
--- Ingreso de datos
-
--- main = do putStrLn "Titulo de la pelicula:"
---           titulo <- readLn
---           if titulo == " "
---               then putStrLn "Ingresa un titulo valido"
---               else putStrLn titulo
 
 
 
--- PARA MI ESTA MAL ACA LAS PELICULAS deberias ser como clientes, definirlas y luego usarlas, me parece.. <--VER
 
---          |Tipo    |id |    titulo pelicula             | alquilada?| Videclub    |   categoria
+--          |Tipo    |id |    titulo pelicula             | alquilada?|    |   categoria
 pelicula1  = Pelicula 1   "Inception"                         False            "Ficcion"
 pelicula2  = Pelicula 2   "Inception"                         False            "Ficcion"
 pelicula3  = Pelicula 3   "Inception"                         True             "Ficcion"
@@ -81,11 +73,24 @@ copiasPelicula :: Pelicula -> String
 copiasPelicula (Pelicula {_id = i,_titulo = t}) = "Pelicula: "++ show i++ ": "++ t++ " | Cantidad de copias: "++ show(cantidad_copias t)
 
 estadoPeliculas :: Pelicula -> String
-estadoPeliculas (Pelicula {_titulo =t, _alquilada=a}) = "La pelicula: " ++t
-                                                                       ++ "-> El estado de la pelicula es: " ++ estadoPelicula a
+estadoPeliculas (Pelicula {_titulo =t, _alquilada=a}) = "La pelicula: " ++t++ "-> El estado de la pelicula es: " ++ estadoPelicula a
+
+peliculaDatos :: Pelicula -> String
+peliculaDatos (Pelicula{_titulo=t,_alquilada=a,_categoria=c}) = "Pelicula: "++ t ++ " se encuentra "++estadoPelicula a ++ ", pertenece a la categoria: "++ c
+
 
 
 agrupar_peliculas_categoria p = groupBy agruparPorCat $ sortBy (\x y -> _categoria x `compare` _categoria y) p
+
+
+-- **************** --
+--    categorias    --
+-- **************** --
+
+nombreCategoria :: Pelicula -> String
+nombreCategoria (Pelicula {_categoria = t}) = t
+
+
 -- agrupar_peliculas_videoclub = groupBy agruparPorVC $ sortBy (\x y -> _videoclub x `compare` _videoclub y) peliculas --peliculas en videoclub
 
 categorias_indices p = zip [1..] $categorias_ordenadas p  --Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
@@ -94,11 +99,33 @@ categorias p = peliculaCategorias p
 
 categorias_ordenadas x = sortBy (\x y -> x `compare` y )$peliculaCategorias x
 
+categorias_count = length (categorias peliculas) -1
+
+--peliculasPorCategoria :: [String] -> Int
+peliculasPorCategoria categoria = length $filter (==categoria) $map (nombreCategoria) peliculas
+
+cantidadDePeliculasPorCategoria = map (peliculasPorCategoria) $categorias peliculas
+
+listado_a_medias :: [(String,Int)]
+listado_a_medias = zip (categorias peliculas) cantidadDePeliculasPorCategoria
+
+cat (s, i) = s ++ " - Cantidad de peliculas: " ++ show i
+
+mostrarCategoriasCantPeliculas = map cat listado_a_medias
+
+
+
+-- **************** --
+--    peliculas     --
+-- **************** --
+
+
+
+
+
 peliculas_na = filter (not . _alquilada) peliculas                                      --Devuelve una lista de peliculas que no estan alquiladas
 
 peliculas_count = length peliculas -1                                                   --Devuelve el numero de peliculas que hay, como valor utilizable
-
-categorias_count = length categorias -1
 
 estadoPelicula estado = if estado == False then " Disponible" else " No disponible"
 
@@ -133,20 +160,20 @@ listar_peliculas_vc     = mapM_  print $map (estadoPeliculas)       peliculas
 listar_peliculas_na     = mapM_  print $map (tituloPeliculas)       peliculas_na
 listar_peliculas_indice = mapM_ print  $map concatIndice $zipeando $peliculaNombre peliculas
 
-validar :: String -> [Pelicula] -> Maybe Int
-validar s p = esValido (reads s)
+validar :: [Pelicula] -> String -> Maybe Int
+validar p s = esValido (reads s)
    where esValido []           = Nothing
          esValido ((n, _):_) 
                | sobrepasa   n = Nothing
                | otherwise     = Just n
-         sobrepasa n = (n < 0) || (n > length categorias p)
+         sobrepasa n = (n < 0) || (n > length (categorias p))
 
 listarPeliculasPorCategoria :: [Pelicula] -> IO ()
 listarPeliculasPorCategoria p = do listar_categorias_indices p
                                    putStrLn "Ingrese el numero de una categoria: "
                                    putStrLn "Presione 0 (cero) para salir."
                                    x <- getLine
-                                   case validar x,p of 
+                                   case (validar p x) of 
                                       Just n  -> if n == 0 then undefined else  peliculas_por_categoria (pred n) p
                                       Nothing -> putStrLn "Pruebe otra vez."              
                                    listarPeliculasPorCategoria peliculas
@@ -162,8 +189,10 @@ cargarPelicula peliculas =
      let pelis' = peliculas ++ [pelicula]
      return pelis'
 
+listarPeliculas p = mapM_ print $map (peliculaDatos) p
+
 opciones :: [(Int,(String))]
-opciones = zip [1..] [("Cargar Pelicula"),("Listar peliculas por categoria"),("Devolver peliculas"),("Salir")]
+opciones = zip [1..] [("Cargar Pelicula"),("Listar peliculas por categoria"),("Listar Peliculas"),("Salir")]
 
 menu :: [Pelicula] -> IO [Pelicula]
 menu peliculas = do
@@ -174,9 +203,10 @@ menu peliculas = do
     1 -> do peliculas' <- cargarPelicula peliculas             
             menu peliculas'
     2 -> putStrLn "Categorias: " >> listarPeliculasPorCategoria peliculas >> menu peliculas 
-    3 -> return peliculas
+    3 -> listarPeliculas peliculas >> menu peliculas
     4 -> undefined
     _ -> putStrLn "Pruebe otra vez." >> menu peliculas
 
+--cantidadDePeliculasPorCategoria = 
 -- clearScreen :: IO ()
 -- clearScreen = putStr cls

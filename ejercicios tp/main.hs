@@ -103,9 +103,15 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 -- 4.    CantidadTitulosOriginales, que devuelve una lista con las películas de todos los videoclubs, sin repetidos.
 -- 5.    peliculasDisponibles, que devuelve una lista con las películas disponibles, de entre los videoclubs de la red, para alquilar y el número de copias.
 -- 6.    peliculasDisponiblesPorCategoria, que devuelve una lista con las películas disponibles por categoría seleccionada, de entre los videoclubs de la red, para alquilar y el número de copias.*
--- 7.    CantidadDePeliculasPorCategoria, devuelve un listado de categorías con la cantidad de películas que hay dentro de esa clasificación.*
+-- 7.  y CantidadDePeliculasPorCategoria, devuelve un listado de categorías con la cantidad de películas que hay dentro de esa clasificación.*
 -- 8.    BuscarPeli, devuelve un listado con los videoclubs que tienen una determinada película.*
 
 -- Objetivos Adicionales de la práctica. Conseguir hacer funciones para añadir datos dinámicos como videoclubs, clientes y películas.
 
 
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height
+    | weight / height ^ 2 <= 18.5 = "Tienes infrapeso ¿Eres emo?"
+    | weight / height ^ 2 <= 25.0 = "Supuestamente eres normal... Espero que seas feo."
+    | weight / height ^ 2 <= 30.0 = "¡Estás gordo! Pierde algo de peso gordito."
+    | otherwise                   = "¡Enhorabuena, eres una ballena!"
