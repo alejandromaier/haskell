@@ -93,7 +93,9 @@ nombreCategoria (Pelicula {_categoria = t}) = t
 
 -- agrupar_peliculas_videoclub = groupBy agruparPorVC $ sortBy (\x y -> _videoclub x `compare` _videoclub y) peliculas --peliculas en videoclub
 
-categorias_indices p = zip [1..] $categorias_ordenadas p  --Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
+categorias_indices p = zip [1..] $categorias_ordenadas p
+
+--Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
 
 categorias p = peliculaCategorias p
 
@@ -111,33 +113,91 @@ listado_a_medias = zip (categorias peliculas) cantidadDePeliculasPorCategoria
 
 cat (s, i) = s ++ " - Cantidad de peliculas: " ++ show i
 
-mostrarCategoriasCantPeliculas = map cat listado_a_medias
+mostrarCategoriasCantPeliculas = map cat listado_a_medias 
+
+
+
+
+
+
+
 
 
 
 -- **************** --
---    peliculas     --
+--   **Generales**  --
 -- **************** --
 
+--Devuelve el numero de peliculas que hay, como valor utilizable
+peliculas_count = length peliculas -1                                                   
+
+--Devuelve el numero de copias de una pelicula segun el titulo
+cantidad_copias titulo = length $filter (==titulo) $map (tituloPelicula) peliculas      
+
+cantidad_copias_na titulo = length $filter (==titulo) $map (tituloPelicula) peliculas_na      
 
 
 
 
-peliculas_na = filter (not . _alquilada) peliculas                                      --Devuelve una lista de peliculas que no estan alquiladas
+-- **************** --
+-- **Disponibilidad**
+-- **************** --
+--Devuelve una lista de peliculas que no estan alquiladas
+peliculas_na = filter (not . _alquilada) peliculas  
 
-peliculas_count = length peliculas -1                                                   --Devuelve el numero de peliculas que hay, como valor utilizable
+--Devuelve una lista de peliculas no alquiladas de un videoclub
+--peliculas_na_vc videoclub =  filter (not . _alquilada) videoclub
 
+--Esta alquilada o no la peli? 
 estadoPelicula estado = if estado == False then " Disponible" else " No disponible"
 
-existe_pelicula titulo = find (==titulo) $map (tituloPelicula) peliculas                --Devuelve un bool si existe la pelicula con ese titulo
+disponibles_cantidad = map (cantidad_copias_na) peliculas_naSinRepetir
 
-cantidad_copias titulo = length $filter (==titulo) $map (tituloPelicula) peliculas      --Devuelve el numero de copias de una pelicula segun el titulo
+peliculasDisponibles = zip peliculas_naSinRepetir disponibles_cantidad
 
+
+
+
+-- **************** --
+--  **Existencia**
+-- **************** --
+--Devuelve un bool si existe la pelicula con ese titulo
+existe_pelicula titulo = find (==titulo) $map (tituloPelicula) peliculas                
+
+--Recibe un string por parametro verifica si existe en la lista de peliculas, si existe muestra cuantas copias tiene.
 
 contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No existe esa pelicula"
                                                           Just titulo -> titulo ++" tiene " ++ if (cantidad_copias titulo) == 1
                                                             then show(cantidad_copias titulo)++" copia."
                                                             else show (cantidad_copias titulo)++" copias."
+
+
+
+-- **************** --
+--  **Sin repetir**
+-- **************** --
+--en forma ordenada las peliculas sin repetir
+titulosOriginales = mapM_ print peliculasSinRepetir2
+
+--Esto lista solo los titulos
+peliculasSinRepetir = nub $map (tituloPelicula) peliculas
+
+--Esto lista de forma Titulo: nombre
+peliculasSinRepetir2 = nub $map (tituloPeliculas) peliculas
+
+--Sin repetir las peliculas no alquiladas
+peliculas_naSinRepetir = nub $map (tituloPelicula) peliculas_na
+
+
+
+
+
+
+
+
+
+
+
 
 -- peliculas_por_vc x = map (tellPelicula) $(agrupar_peliculas_videoclub )!! x -- peliculas en videoclub
 -- listar_categorias       = mapM_  print $peliculaCategorias          peliculas
@@ -207,6 +267,3 @@ menu peliculas = do
     4 -> undefined
     _ -> putStrLn "Pruebe otra vez." >> menu peliculas
 
---cantidadDePeliculasPorCategoria = 
--- clearScreen :: IO ()
--- clearScreen = putStr cls

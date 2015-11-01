@@ -100,8 +100,8 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 -- 1.    disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
 -- 2.    masAlquiladaEnLaRed, que devuelve la película más alquilada en todos los videoclubs de la red.
 -- 3.    ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
--- 4.    CantidadTitulosOriginales, que devuelve una lista con las películas de todos los videoclubs, sin repetidos.
--- 5.    peliculasDisponibles, que devuelve una lista con las películas disponibles, de entre los videoclubs de la red, para alquilar y el número de copias.
+-- 4.  y CantidadTitulosOriginales, que devuelve una lista con las películas de todos los videoclubs, sin repetidos.
+-- 5.  y peliculasDisponibles, que devuelve una lista con las películas disponibles, de entre los videoclubs de la red, para alquilar y el número de copias.
 -- 6.    peliculasDisponiblesPorCategoria, que devuelve una lista con las películas disponibles por categoría seleccionada, de entre los videoclubs de la red, para alquilar y el número de copias.*
 -- 7.  y CantidadDePeliculasPorCategoria, devuelve un listado de categorías con la cantidad de películas que hay dentro de esa clasificación.*
 -- 8.    BuscarPeli, devuelve un listado con los videoclubs que tienen una determinada película.*
