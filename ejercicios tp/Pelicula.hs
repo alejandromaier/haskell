@@ -90,21 +90,24 @@ agrupar_peliculas_categoria p = groupBy agruparPorCat $ sortBy (\x y -> _categor
 nombreCategoria :: Pelicula -> String
 nombreCategoria (Pelicula {_categoria = t}) = t
 
-
 -- agrupar_peliculas_videoclub = groupBy agruparPorVC $ sortBy (\x y -> _videoclub x `compare` _videoclub y) peliculas --peliculas en videoclub
-
 categorias_indices p = zip [1..] $categorias_ordenadas p
 
 --Lista en orden -> (1,"Accion") (2,"Fantasia") ..etc
-
 categorias p = peliculaCategorias p
 
+--Ordena las categorias existentes de la a-z
 categorias_ordenadas x = sortBy (\x y -> x `compare` y )$peliculaCategorias x
 
+--Cantidad de categorias
 categorias_count = length (categorias peliculas) -1
 
---peliculasPorCategoria :: [String] -> Int
+--peliculasPorCategoria :: [String] -> Int Cuantas peliculas tiene una categoria
 peliculasPorCategoria categoria = length $filter (==categoria) $map (nombreCategoria) peliculas
+
+--esdecategoria categoria = if()
+
+--peliculasdecategoria categoria = $filter (_categoria == categoria) peliculas
 
 cantidadDePeliculasPorCategoria = map (peliculasPorCategoria) $categorias peliculas
 
@@ -146,7 +149,7 @@ cantidad_copias_na titulo = length $filter (==titulo) $map (tituloPelicula) peli
 peliculas_na = filter (not . _alquilada) peliculas  
 
 --Devuelve una lista de peliculas no alquiladas de un videoclub
---peliculas_na_vc videoclub =  filter (not . _alquilada) videoclub
+peliculas_na_vc videoclub =  filter (not . _alquilada) videoclub
 
 --Esta alquilada o no la peli? 
 estadoPelicula estado = if estado == False then " Disponible" else " No disponible"
@@ -164,6 +167,8 @@ peliculasDisponibles = zip peliculas_naSinRepetir disponibles_cantidad
 --Devuelve un bool si existe la pelicula con ese titulo
 existe_pelicula titulo = find (==titulo) $map (tituloPelicula) peliculas                
 
+
+
 --Recibe un string por parametro verifica si existe en la lista de peliculas, si existe muestra cuantas copias tiene.
 
 contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No existe esa pelicula"
@@ -171,6 +176,13 @@ contar_pelicula titulo = case (existe_pelicula titulo) of Nothing     -> "No exi
                                                             then show(cantidad_copias titulo)++" copia."
                                                             else show (cantidad_copias titulo)++" copias."
 
+
+--Devuelve un bool si existe la pelicula con ese titulo y esta disponible
+existe_pelicula_na titulo = find (==titulo) $map (tituloPelicula) peliculas_na                
+
+--dice bien las cosas
+tell_existe_pelicula_na titulo = case (existe_pelicula_na titulo) of Nothing     -> "No existe esa pelicula"
+                                                                     Just titulo -> "Esta pelicula esta disponible en el catalogo de nuestra red" 
 
 
 -- **************** --

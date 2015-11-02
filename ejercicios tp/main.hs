@@ -93,18 +93,23 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 -- •     PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). El cliente puede alquilar más de una copia de la misma película.
 -- •     Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
 -- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
--- •     DisponibleParaAlquilar, que indica si una película esta disponible para ser alquilada en el videoclub (por ejemplo, una película puede estar en un videoclub pero no estar disponible porque todas sus copias están alquiladas, o no estar disponible porque no esta en el catálogo).
+-- •   c  DisponibleParaAlquilar, que indica si una película esta disponible para ser alquilada en el videoclub (por ejemplo, una película puede estar en un videoclub pero no estar disponible porque todas sus copias están alquiladas, o no estar disponible porque no esta en el catálogo).
 -- •   y  CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
 
 -- Especificar y definir las siguientes funciones:
--- 1.    disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
+-- 1.  c disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
+        --falta una verificación
+
 -- 2.    masAlquiladaEnLaRed, que devuelve la película más alquilada en todos los videoclubs de la red.
 -- 3.    ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
 -- 4.  y CantidadTitulosOriginales, que devuelve una lista con las películas de todos los videoclubs, sin repetidos.
 -- 5.  y peliculasDisponibles, que devuelve una lista con las películas disponibles, de entre los videoclubs de la red, para alquilar y el número de copias.
--- 6.    peliculasDisponiblesPorCategoria, que devuelve una lista con las películas disponibles por categoría seleccionada, de entre los videoclubs de la red, para alquilar y el número de copias.*
+-- 6.  c peliculasDisponiblesPorCategoria, que devuelve una lista con las películas disponibles por categoría seleccionada, de entre los videoclubs de la red, para alquilar y el número de copias.*
+        --falta hacer una lista de peliculas por categorias
+
 -- 7.  y CantidadDePeliculasPorCategoria, devuelve un listado de categorías con la cantidad de películas que hay dentro de esa clasificación.*
--- 8.    BuscarPeli, devuelve un listado con los videoclubs que tienen una determinada película.*
+-- 8.  c BuscarPeli, devuelve un listado con los videoclubs que tienen una determinada película.*
+        --Como se ve de que videoclub es la pelicula? 
 
 -- Objetivos Adicionales de la práctica. Conseguir hacer funciones para añadir datos dinámicos como videoclubs, clientes y películas.
 
