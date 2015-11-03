@@ -60,7 +60,6 @@ copias_p = do let videoclub = videoclub3
               let pcopias= "Pelicula: "++ pelicula ++", copias: "++ copias
               putStrLn pcopias
 
-
 cargarVideoclub :: [VideoClub] -> IO [VideoClub]
 cargarVideoclub videoclubs = do
   putStrLn "Ingresando datos videoclub.." 

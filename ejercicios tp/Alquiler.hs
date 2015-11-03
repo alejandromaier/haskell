@@ -22,6 +22,7 @@ alquiler7  = Alquiler 7  V.videoclub3 C.cliente9  P.pelicula7
 alquiler8  = Alquiler 8  V.videoclub3 C.cliente8  P.pelicula8
 alquiler9  = Alquiler 9  V.videoclub3 C.cliente10 P.pelicula9
 alquiler10 = Alquiler 10 V.videoclub1 C.cliente3  P.pelicula10
+alquiler11 = Alquiler 11 V.videoclub2 C.cliente1  P.pelicula14
 
 alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquiler7,alquiler8,alquiler9,alquiler10]
 
@@ -33,30 +34,14 @@ listar_alquileres = mapM_ print $map (alquilerDatos) alquileres
 
 alquilada pelis = find (not . P._alquilada) pelis
 
--- alquiler :: IO ()
--- alquiler = do putStrLn "Ingresando Datos Alquiler.."
---               putStrLn "Videoclubs:"
---               V.listar_videoclubs
---               putStrLn "Ingrese el numero de un videoclub:"
---               x <- readLn
---               let videoclub = V.videoclubs !! pred x
---               let pelis = V.peliculas_vc videoclub
---               if ((alquilada pelis)== Nothing) 
---                 then do putStrLn "Ninguna pelicula disponible para alquilar" 
---                 else do putStrLn "Clientes:"
---                         V.listar_clientes videoclub
---                         putStrLn "Ingrese el numero de un cliente:"
---                         c <- readLn
---                         let cliente = C.clientes !! pred c
---                         putStrLn "Peliculas:"
---                         V.listar_peliculas_disponibles videoclub
---                         putStrLn "Ingrese el numero de la pelicula:"
---                         p <- readLn
---                         let pelicula = P.peliculas !! pred p
---                         let alquiler = Alquiler (length alquileres + 1) videoclub cliente pelicula
---                         let alquileres' = alquileres ++ [alquiler]
---                         putStrLn "Alquiler cargado.."
---                         mapM_ print $map (alquilerDatos) alquileres'
+agruparPorCliente :: Alquiler -> Alquiler -> Bool
+agruparPorCliente t1 t2 = C._nombre(_cliente t1) == C._nombre (_cliente t2)
+
+
+agrupar_peliculas_cliente alquileres = groupBy agruparPorCliente $ sortBy (\x y -> _cliente x `compare` _cliente y) alquileres
+
+-- peliculasPorCliente :: [Alquiler] -> [String]
+-- peliculasPorCliente = nub . map _cliente
 
 cargarAlquiler :: [Alquiler] -> IO [Alquiler]
 cargarAlquiler alquileres = do
