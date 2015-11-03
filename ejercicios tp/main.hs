@@ -9,9 +9,8 @@ import qualified Alquiler    as A
 
 
 -- Listas
-clientes                   = C.clientes
+
 listar_clientes            = C.listar_clientes
-peliculas                  = P.listar_peliculas
 listar_peliculas           = P.listar_peliculas
 -- listar_copias_peliculas = P.listar_copias_peliculas
 listar_peliculas_vc        = P.listar_peliculas_vc
@@ -20,8 +19,21 @@ listar_categorias          = P.listar_categorias
 listar_peliculas_categoria = P.menu
 listar_videoclubs          = V.listar_videoclubs
 
+-- cliente_menu   = C.menu
+-- pelicula_menu  = P.menu
+-- videoclub_menu = V.menu
+-- alquiler_menu  = A.menu
+
+clientes   = C.clientes
+peliculas  = P.peliculas
+videoclubs = V.videoclubs
+alquileres = A.alquileres
+
 salir = undefined
+
+lista_ejercicios :: IO ()
 lista_ejercicios = putStrLn "Lista de ejercicios"
+                   
 
 -- clearScreen :: IO ()
 -- clearScreen = putStrLn ""

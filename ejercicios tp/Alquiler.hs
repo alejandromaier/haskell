@@ -33,30 +33,70 @@ listar_alquileres = mapM_ print $map (alquilerDatos) alquileres
 
 alquilada pelis = find (not . P._alquilada) pelis
 
-alquiler :: IO ()
-alquiler = do putStrLn "Ingresando Datos Alquiler.."
-              putStrLn "Videoclubs:"
-              V.listar_videoclubs
-              putStrLn "Ingrese el numero de un videoclub:"
-              x <- readLn
-              let videoclub = V.videoclubs !! pred x
-              let pelis = V.peliculas_vc videoclub
-              if ((alquilada pelis)== Nothing) 
-                then do putStrLn "Ninguna pelicula disponible para alquilar" 
-                else do putStrLn "Clientes:"
-                        V.listar_clientes videoclub
-                        putStrLn "Ingrese el numero de un cliente:"
-                        c <- readLn
-                        let cliente = C.clientes !! pred c
-                        putStrLn "Peliculas:"
-                        V.listar_peliculas_disponibles videoclub
-                        putStrLn "Ingrese el numero de la pelicula:"
-                        p <- readLn
-                        let pelicula = P.peliculas !! pred p
-                        let alquiler = Alquiler (length alquileres + 1) videoclub cliente pelicula
-                        let alquileres' = alquileres ++ [alquiler]
-                        putStrLn "Alquiler cargado.."
-                        mapM_ print $map (alquilerDatos) alquileres'
+-- alquiler :: IO ()
+-- alquiler = do putStrLn "Ingresando Datos Alquiler.."
+--               putStrLn "Videoclubs:"
+--               V.listar_videoclubs
+--               putStrLn "Ingrese el numero de un videoclub:"
+--               x <- readLn
+--               let videoclub = V.videoclubs !! pred x
+--               let pelis = V.peliculas_vc videoclub
+--               if ((alquilada pelis)== Nothing) 
+--                 then do putStrLn "Ninguna pelicula disponible para alquilar" 
+--                 else do putStrLn "Clientes:"
+--                         V.listar_clientes videoclub
+--                         putStrLn "Ingrese el numero de un cliente:"
+--                         c <- readLn
+--                         let cliente = C.clientes !! pred c
+--                         putStrLn "Peliculas:"
+--                         V.listar_peliculas_disponibles videoclub
+--                         putStrLn "Ingrese el numero de la pelicula:"
+--                         p <- readLn
+--                         let pelicula = P.peliculas !! pred p
+--                         let alquiler = Alquiler (length alquileres + 1) videoclub cliente pelicula
+--                         let alquileres' = alquileres ++ [alquiler]
+--                         putStrLn "Alquiler cargado.."
+--                         mapM_ print $map (alquilerDatos) alquileres'
 
-                        
+cargarAlquiler :: [Alquiler] -> IO [Alquiler]
+cargarAlquiler alquileres = do
+  putStrLn "Ingresando datos alquiler.." 
+  do videoclub <- V.devuelveVideoclub
+     let pelis = V.peliculas_vc videoclub
+     if ((alquilada pelis)== Nothing)
+      then do putStrLn "Ninguna pelicula disponible para alquilar" >> return alquileres 
+      else do putStrLn "Seleccione el cliente.- "
+              V.listar_clientes videoclub
+              putStrLn "Numero del cliente: ."
+              x <- readLn     
+              let cliente = C.clientes !! pred x
+              putStrLn "Seleccione la pelicula.-"
+              V.listar_peliculas_disponibles videoclub
+              putStrLn "Numero de la pelicula:"
+              p <- readLn
+              let pelicula = P.peliculas !! pred p     
+              putStrLn "-.Alquiler cargado.-"
+              let alquiler = Alquiler (length alquileres + 1) videoclub cliente pelicula
+                  alquileres' = alquileres ++ [alquiler] 
+              return alquileres'
 
+
+listarAlquileres alquileres = mapM_ print $map (alquilerDatos) alquileres
+
+opciones :: [(Int,(String))]
+opciones = zip [1..] [("Cargar Alquiler"),("Listar Alquileres"),("Volver al menu anterior"),("Salir")]
+
+concatIndice (i, (s)) = show i ++ ".) " ++ s
+
+menu :: [Alquiler] -> IO [Alquiler]
+menu alquileres = do
+  putStrLn "Eliga su opcion: "
+  putStrLn . unlines $ map concatIndice opciones
+  str <- getLine
+  case read str of
+    1 -> do alquileres' <- cargarAlquiler alquileres             
+            menu alquileres'
+    2 -> listarAlquileres alquileres >> menu alquileres
+    3 -> return alquileres    
+    4 -> undefined
+    _ -> putStrLn "Pruebe otra vez." >> menu alquileres

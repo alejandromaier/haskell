@@ -279,3 +279,10 @@ menu peliculas = do
     4 -> undefined
     _ -> putStrLn "Pruebe otra vez." >> menu peliculas
 
+devuelvePelicula :: IO Pelicula
+devuelvePelicula = do putStrLn "Peliculas: "                       
+                      listar_peliculas
+                      putStrLn "Ingrese el numero de una pelicula: "
+                      x <- readLn
+                      let pelicula = peliculas !! pred x
+                      return pelicula

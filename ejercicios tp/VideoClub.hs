@@ -34,31 +34,19 @@ listar_peliculas videoclub = mapM_ print $map P.concatIndice $P.zipeando $P.peli
 listar_peliculas_disponibles videoclub = mapM_ print $map (P.tellPelicula) $filter (not . P._alquilada) $_peliculas (videoclub)
 listar_videoclubs = mapM_ print $map (indiceVideoClub) videoclubs
 
+devuelveVideoclub :: IO VideoClub
+devuelveVideoclub = do putStrLn "Videoclubs: "                       
+                       listar_videoclubs
+                       putStrLn "Ingrese el numero de un videoclub: "
+                       x <- readLn
+                       let videoclub = videoclubs !! pred x
+                       return videoclub
+
 clientes :: IO ()
 clientes = do listar_videoclubs
               putStrLn "Ingrese el numero de un videoclub: "
               x <- readLn
               listar_clientes $videoclubs !! pred x
-
-
--- cargar :: IO ()
--- cargar = do putStrLn "Ingresando datos pelicula:"
---             putStrLn "Titulo:"
---             titulo <- getLine
---             putStrLn "Ingrese Categoria: "
---             P.listar_categorias_indices
---             cat <- getLine
---             let pelicula = P.Pelicula (length P.peliculas + 1) titulo False cat
---             let peliculas' = P.peliculas ++ [pelicula]
---             putStrLn "Pelicula cargada.."
---             mapM_ print $map (P.estadoPeliculas) peliculas'
-
--- v_clubs = do putStrLn "Videoclubs"
---              listar_videoclubs
---              putStrLn "Ingrese el numero de un videoclub"
---              x <- readLn
---              let videoclub = videoclubs !! pred x
---              return videoclub
 
 copias_p :: IO () 
 copias_p = do let videoclub = videoclub3
@@ -73,3 +61,36 @@ copias_p = do let videoclub = videoclub3
               putStrLn pcopias
 
 
+cargarVideoclub :: [VideoClub] -> IO [VideoClub]
+cargarVideoclub videoclubs = do
+  putStrLn "Ingresando datos videoclub.." 
+  putStrLn "Nombre: "
+  nombre <- getLine
+  putStrLn "Direccion: "
+  dir <- getLine
+  let clientes = []
+      peliculas = []
+  let videoclub = VideoClub (length videoclubs + 1) nombre dir clientes peliculas
+      videoclubs' = videoclubs ++ [videoclub] 
+  return videoclubs'
+
+
+listarVideoclubs videoclubs = mapM_ print $map (nombreVideoClub) videoclubs
+
+opciones :: [(Int,(String))]
+opciones = zip [1..] [("Cargar Videoclub"),("Listar Videoclubs"),("Volver al menu anterior"),("Salir")]
+
+concatIndice (i, (s)) = show i ++ ".) " ++ s
+
+menu :: [VideoClub] -> IO [VideoClub]
+menu videoclubs = do
+  putStrLn "Eliga su opcion: "
+  putStrLn . unlines $ map concatIndice opciones
+  str <- getLine
+  case read str of
+    1 -> do videoclubs' <- cargarVideoclub videoclubs             
+            menu videoclubs'
+    2 -> listarVideoclubs videoclubs >> menu videoclubs
+    3 -> return videoclubs    
+    4 -> undefined
+    _ -> putStrLn "Pruebe otra vez." >> menu videoclubs

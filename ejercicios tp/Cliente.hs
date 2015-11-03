@@ -31,3 +31,46 @@ listaCliente (Cliente {_id = i,_nombre = n, _apellido = a }) = "Cliente: " ++ a 
 
 listar_clientes         = mapM_  print $map (listaCliente)       clientes
 
+
+cargarCliente :: [Cliente] -> IO [Cliente]
+cargarCliente clientes = do
+  putStrLn "Ingresando datos cliente.." 
+  putStrLn "Nombre: "
+  nombre <- getLine
+  putStrLn "Apellido: "
+  apellido <- getLine
+  putStrLn "Edad: "
+  edad <- readLn
+  putStrLn "-.Cliente cargado.-"
+  let cliente = Cliente (length clientes + 1) nombre apellido edad
+      clientes' = clientes ++ [cliente] 
+  return clientes'
+
+
+listarClientes clientes = mapM_ print $map (listaCliente) clientes
+
+opciones :: [(Int,(String))]
+opciones = zip [1..] [("Cargar Cliente"),("Listar Clientes"),("Volver al menu anterior"),("Salir")]
+
+concatIndice (i, (s)) = show i ++ ".) " ++ s
+
+menu :: [Cliente] -> IO [Cliente]
+menu clientes = do
+  putStrLn "Eliga su opcion: "
+  putStrLn . unlines $ map concatIndice opciones
+  str <- getLine
+  case read str of
+    1 -> do clientes' <- cargarCliente clientes             
+            menu clientes'
+    2 -> listarClientes clientes >> menu clientes
+    3 -> return clientes    
+    4 -> undefined
+    _ -> putStrLn "Pruebe otra vez." >> menu clientes
+
+devuelveCliente :: IO Cliente
+devuelveCliente = do putStrLn "Clientes: "                       
+                     listar_clientes
+                     putStrLn "Ingrese el numero de un cliente:"
+                     x <- readLn
+                     let cliente = clientes !! pred x
+                     return cliente
