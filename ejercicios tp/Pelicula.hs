@@ -32,6 +32,8 @@ pelicula12 = Pelicula 12  "Transformers 1"                    False            "
 pelicula13 = Pelicula 13  "Transformers 2"                    False            "Accion"
 pelicula14 = Pelicula 14  "Transformers "                     False            "Accion"
 
+flag       = Pelicula 0 "" True ""
+
 peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9,pelicula10,pelicula11,pelicula12,pelicula13,pelicula14]
 
 
