@@ -31,6 +31,7 @@ peliculas_vc videoclub = _peliculas (videoclub)
 
 listar_clientes videoclub = mapM_ print $map (C.tellCliente) $_clientes (videoclub)
 listar_peliculas videoclub = mapM_ print $map P.concatIndice $P.zipeando $P.peliculaNombre $_peliculas (videoclub)
+listar_peliculas_vc videoclub = mapM_ print $map (P.peliculaIndice) $_peliculas (videoclub)
 listar_peliculas_disponibles videoclub = mapM_ print $map (P.tellPelicula) $filter (not . P._alquilada) $_peliculas (videoclub)
 listar_videoclubs = mapM_ print $map (indiceVideoClub) videoclubs
 
