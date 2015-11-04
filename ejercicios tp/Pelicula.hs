@@ -17,8 +17,8 @@ data Pelicula = Pelicula
 
 
 --          |Tipo    |id |    titulo pelicula             | alquilada?|    |   categoria
-pelicula1  = Pelicula 1   "Inception"                         False            "Ficcion"
-pelicula2  = Pelicula 2   "Inception"                         False            "Ficcion"
+pelicula1  = Pelicula 1   "Inception"                         True            "Ficcion"
+pelicula2  = Pelicula 2   "Inception"                         True            "Ficcion"
 pelicula3  = Pelicula 3   "Inception"                         True             "Ficcion"
 pelicula4  = Pelicula 4   "The Call"                          True             "Miedo"
 pelicula5  = Pelicula 5   "Frozen"                            True             "Fantasia"
@@ -30,11 +30,13 @@ pelicula10 = Pelicula 10  "Up"                                True             "
 pelicula11 = Pelicula 11  "Safe House"                        False            "Suspenso"
 pelicula12 = Pelicula 12  "Transformers 1"                    False            "Accion"
 pelicula13 = Pelicula 13  "Transformers 2"                    False            "Accion"
-pelicula14 = Pelicula 14  "Transformers "                     False            "Accion"
+pelicula14 = Pelicula 14  "Transformers "                     True             "Accion"
+pelicula15 = Pelicula 15   "Inception"                        True             "Ficcion"
+pelicula16 = Pelicula 16   "Inception"                        False            "Ficcion"
 
 flag       = Pelicula 0 "" True ""
 
-peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9,pelicula10,pelicula11,pelicula12,pelicula13,pelicula14]
+peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9, pelicula10,pelicula11,pelicula12,pelicula13,pelicula14, pelicula15, pelicula16]
 
 
 
@@ -67,6 +69,10 @@ tituloPeliculas (Pelicula {_titulo = t}) = "Titulo: "++t
 
 tellPelicula :: Pelicula -> String
 tellPelicula (Pelicula {_id = i, _titulo = t, _alquilada=a}) = "Pelicula "++ show i ++ ": " ++ t ++ " -> "++estadoPelicula a
+
+peliculaIndice :: Pelicula -> String
+peliculaIndice (Pelicula {_id = i, _titulo = t}) = "Pelicula "++ show i ++ ": " ++ t
+
 
 tituloPelicula :: Pelicula -> String
 tituloPelicula (Pelicula {_titulo = t}) = t
@@ -161,6 +167,10 @@ disponibles_cantidad = map (cantidad_copias_na) peliculas_naSinRepetir
 peliculasDisponibles = zip peliculas_naSinRepetir disponibles_cantidad
 
 
+--disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
+--devuelve true si la pelicula esta disponible. 
+is_na pelicula = elem (pelicula) peliculas_na
+is_in_vc videoclub pelicula = elem (pelicula) $(_videoclub)V.videoclub1
 
 
 -- **************** --
