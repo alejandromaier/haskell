@@ -27,9 +27,9 @@ nombreVideoClub (VideoClub {_id=i,_nombre=n})= n
 peliculas_vc videoclub = _peliculas (videoclub)
 
 
---*****************************--
---**  Disponible en la red   **--
---*****************************
+-- *****************************--
+-- **  Disponible en la red   **--
+-- *****************************
 --disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
 --devuelve true si la pelicula esta disponible. 
 is_na pelicula = elem (pelicula) P.peliculas_na

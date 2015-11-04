@@ -31,7 +31,7 @@ pelicula11 = Pelicula 11  "Safe House"                        False            "
 pelicula12 = Pelicula 12  "Transformers 1"                    False            "Accion"
 pelicula13 = Pelicula 13  "Transformers 2"                    False            "Accion"
 pelicula14 = Pelicula 14  "Transformers "                     True             "Accion"
-pelicula15 = Pelicula 15   "Inception"                        True             "Ficcion"
+pelicula15 = Pelicula 15   "Inception"                        False             "Ficcion"
 pelicula16 = Pelicula 16   "Inception"                        False            "Ficcion"
 
 flag       = Pelicula 0 "" True ""
@@ -153,6 +153,7 @@ cantidad_copias_na titulo = length $filter (==titulo) $map (tituloPelicula) peli
 -- **************** --
 -- **Disponibilidad**
 -- **************** --
+--disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
 --Devuelve una lista de peliculas que no estan alquiladas
 peliculas_na = filter (not . _alquilada) peliculas  
 
@@ -165,6 +166,10 @@ estadoPelicula estado = if estado == False then " Disponible" else " No disponib
 disponibles_cantidad = map (cantidad_copias_na) peliculas_naSinRepetir
 
 peliculasDisponibles = zip peliculas_naSinRepetir disponibles_cantidad
+
+contame_cual  = [ fst x ++ " esta disponible. Copias: " ++ show (snd x) | x <- peliculasDisponibles]
+
+te_cuento_cual = mapM_ print $contame_cual 
 
 
 
