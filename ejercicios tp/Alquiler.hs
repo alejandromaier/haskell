@@ -43,16 +43,9 @@ tellAlquiler :: C.Cliente -> V.VideoClub -> P.Pelicula -> String
 tellAlquiler (C.Cliente{C._nombre=n,C._apellido=a}) (V.VideoClub{V._nombre=nvc}) (P.Pelicula{P._titulo=t}) =
              n ++ " " ++ a ++ " alquilo la pelicula " ++ t ++ " en el videoclub "++nvc 
 
-
---   PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas 
--- en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). 
--- El cliente puede alquilar más de una copia de la misma película.
-
 peliculasCliente cliente videoclub = filter (/=flag) $map (clienteDatos cliente videoclub) alquileres
 
 listar_alquieres_cliente cliente videoclub = mapM_ print $map (tellAlquiler cliente videoclub) (peliculasCliente cliente videoclub) 
-
--------------------------------------------------------------------------------------------------------------
 
 listar_alquileres = mapM_ print $map (alquilerDatos) alquileres
 
@@ -89,7 +82,7 @@ cargarAlquiler alquileres = do
 listarAlquileres alquileres = mapM_ print $map (alquilerDatos) alquileres
 
 opciones :: [(Int,(String))]
-opciones = zip [1..] [("Cargar Alquiler"),("Listar Alquileres"),("Alquileres por Cliente"),("Verificar si un cliente alquilo una pelicula especifica."),("Volver al menu anterior"),("Salir")]
+opciones = zip [1..] [("Cargar Alquiler"),("Listar Alquileres"),("Alquileres por Cliente"),("Volver al menu anterior"),("Salir")]
 
 concatIndice (i, (s)) = show i ++ ".) " ++ s
 
@@ -110,34 +103,6 @@ menu alquileres = do
             let cliente = C.clientes !! pred x
             listar_alquieres_cliente cliente videoclub
             menu alquileres
-    4 -> do videoclub <- V.devuelveVideoclub
-            putStrLn "Seleccione el cliente: "
-            V.listar_clientes videoclub
-            putStrLn "Numero del cliente: "
-            x <- readLn
-            let cliente = C.clientes !! pred x
-            putStrLn "Seleccione la pelicula: "
-            V.listar_peliculas_vc videoclub
-            putStrLn "Numero de pelicula: "
-            p <- readLn
-            let pelicula = P.peliculas !! pred p
-            verificar $alquilo cliente videoclub pelicula
-            menu alquileres
-    5 -> return alquileres    
-    6 -> undefined
+    4 -> return alquileres    
+    5 -> undefined
     _ -> putStrLn "Pruebe otra vez." >> menu alquileres
-
-
--- •     Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
-
-alquilo cliente videoclub pelicula = elem (pelicula) $peliculasCliente cliente videoclub
-
-verificar bool = if bool then putStrLn "El cliente si alquilo la pelicula." else putStrLn "Ese cliente no alquilo la pelicula."
-
--- . -- . -- . -- .-- . -- . -- . --.-- . -- . -- . --.-- . -- . -- . --.-- . -- . -- . --
-
--- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
-
-
-
--- . -- . -- . -- .-- . -- . -- . --.-- . -- . -- . --.-- . -- . -- . --.-- . -- . -- . --
