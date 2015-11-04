@@ -99,11 +99,11 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 -- •   y  Clientes, que devuelve una lista con los clientes registrados en el videoclub.
 -- •   y  Películas, que devuelve una lista con las películas que están en el catálogo del videoclub, independientemente de si esta disponible o no.
 -- •   y  CantidadDeCopiasPelicula, que devuelve cuantas copias de una película tiene el videoclub (esta función se indefine, o sea da error, si la película no pertenece al catalogo del videoclub).
--- •   n  CantidadDeCopias, que devuelve una lista con las películas y cuantas copias  tiene el videoclub.
+-- •   y  CantidadDeCopias, que devuelve una lista con las películas y cuantas copias  tiene el videoclub.
 -- •   y  PelículasNoAlquiladas, que devuelve una lista de películas que no han sido alquiladas.
 -- •   y  peliculasPorCategoria, que devuelve un listado de películas por categoría seleccionada.*
--- •     PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). El cliente puede alquilar más de una copia de la misma película.
--- •     Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
+-- •   y  PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). El cliente puede alquilar más de una copia de la misma película.
+-- •   y  Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
 -- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
 -- •   c  DisponibleParaAlquilar, que indica si una película esta disponible para ser alquilada en el videoclub (por ejemplo, una película puede estar en un videoclub pero no estar disponible porque todas sus copias están alquiladas, o no estar disponible porque no esta en el catálogo).
 -- •   y  CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
