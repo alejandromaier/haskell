@@ -27,14 +27,18 @@ nombreVideoClub (VideoClub {_id=i,_nombre=n})= n
 peliculas_vc videoclub = _peliculas (videoclub)
 
 
-
+--*****************************--
+--**  Disponible en la red   **--
+--*****************************
 --disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
 --devuelve true si la pelicula esta disponible. 
 is_na pelicula = elem (pelicula) P.peliculas_na
-is_in_vc videoclub pelicula = elem (pelicula) $ (_peliculas) videoclub
+is_in_vc pelicula videoclub  = if (elem (pelicula) $ (_peliculas) videoclub) then _nombre(videoclub) else ""
+en_el_videoclub pelicula = head $filter (/= "") $map (is_in_vc pelicula) videoclubs
+disponible_en_la_red pelicula = if(is_na pelicula) then "La pelicula esta disponible en el videoclub "++ en_el_videoclub pelicula  else "La pelicula no esta disponible"
 
 
-
+--verificar  = if bool then putStrLn "El cliente si alquilo la pelicula." else putStrLn "Ese cliente no alquilo la pelicula."
 
 listar_clientes videoclub = mapM_ print $map (C.tellCliente) $_clientes (videoclub)
 listar_peliculas videoclub = mapM_ print $map P.concatIndice $P.zipeando $P.peliculaNombre $_peliculas (videoclub)

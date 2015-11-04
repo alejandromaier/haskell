@@ -109,9 +109,7 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 -- •   y  CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
 
 -- Especificar y definir las siguientes funciones:
--- 1.  c disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
-        --falta una verificación
-
+-- 1.  y disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
 -- 2.    masAlquiladaEnLaRed, que devuelve la película más alquilada en todos los videoclubs de la red.
 -- 3.    ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
 -- 4.  y CantidadTitulosOriginales, que devuelve una lista con las películas de todos los videoclubs, sin repetidos.
