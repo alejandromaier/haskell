@@ -124,11 +124,3 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
         --Como se ve de que videoclub es la pelicula? 
 
 -- Objetivos Adicionales de la práctica. Conseguir hacer funciones para añadir datos dinámicos como videoclubs, clientes y películas.
-
-
-bmiTell :: (RealFloat a) => a -> a -> String
-bmiTell weight height
-    | weight / height ^ 2 <= 18.5 = "Tienes infrapeso ¿Eres emo?"
-    | weight / height ^ 2 <= 25.0 = "Supuestamente eres normal... Espero que seas feo."
-    | weight / height ^ 2 <= 30.0 = "¡Estás gordo! Pierde algo de peso gordito."
-    | otherwise                   = "¡Enhorabuena, eres una ballena!"

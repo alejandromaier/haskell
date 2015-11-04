@@ -26,7 +26,7 @@ alquiler11 = Alquiler 11 V.videoclub1 C.cliente1  P.pelicula14
 alquiler12 = Alquiler 12 V.videoclub1 C.cliente2  P.pelicula15
 
 
-alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquiler7,alquiler8,alquiler9,alquiler10,alquiler11]
+alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquiler7,alquiler8,alquiler9,alquiler10,alquiler11,alquiler12]
 
 alquilerDatos :: Alquiler -> String
 alquilerDatos (Alquiler{_id=i,_videoclub=v,_cliente=c,_pelicula=p}) = show i ++"-"
