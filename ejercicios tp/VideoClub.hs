@@ -28,6 +28,13 @@ peliculas_vc videoclub = _peliculas (videoclub)
 
 
 
+--disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
+--devuelve true si la pelicula esta disponible. 
+is_na pelicula = elem (pelicula) P.peliculas_na
+is_in_vc videoclub pelicula = elem (pelicula) $ (_peliculas) videoclub
+
+
+
 
 listar_clientes videoclub = mapM_ print $map (C.tellCliente) $_clientes (videoclub)
 listar_peliculas videoclub = mapM_ print $map P.concatIndice $P.zipeando $P.peliculaNombre $_peliculas (videoclub)
@@ -94,3 +101,6 @@ menu videoclubs = do
     3 -> return videoclubs    
     4 -> undefined
     _ -> putStrLn "Pruebe otra vez." >> menu videoclubs
+
+
+

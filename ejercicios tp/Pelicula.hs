@@ -167,10 +167,6 @@ disponibles_cantidad = map (cantidad_copias_na) peliculas_naSinRepetir
 peliculasDisponibles = zip peliculas_naSinRepetir disponibles_cantidad
 
 
---disponibleEnLaRed, que dice si la película está disponible en al menos alguno de los videoclubs de la red.
---devuelve true si la pelicula esta disponible. 
-is_na pelicula = elem (pelicula) peliculas_na
-is_in_vc videoclub pelicula = elem (pelicula) $(_videoclub)V.videoclub1
 
 
 -- **************** --
