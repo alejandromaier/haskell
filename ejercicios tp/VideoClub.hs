@@ -12,9 +12,9 @@ data VideoClub = VideoClub
       , _peliculas   :: [P.Pelicula]
       } deriving (Eq,Show,Ord)
 
-videoclub1 = VideoClub 1 "VHS Movies"           "25 de mayo 333"  [C.cliente1,C.cliente2,C.cliente3]             [P.pelicula1,P.pelicula2,P.pelicula3,P.pelicula10]
+videoclub1 = VideoClub 1 "VHS Movies"           "25 de mayo 333"  [C.cliente1,C.cliente2,C.cliente3]             [P.pelicula1,P.pelicula2,P.pelicula3,P.pelicula10,P.pelicula14,P.pelicula15]
 videoclub2 = VideoClub 2 "All the movies 4 you" "9 de julio 128"  [C.cliente4,C.cliente5,C.cliente6]             [P.pelicula5,P.pelicula4,P.pelicula6,P.pelicula11,P.pelicula13]
-videoclub3 = VideoClub 3 "Hollywood movies"     "Buenos Aires 24" [C.cliente7,C.cliente8,C.cliente9,C.cliente10] [P.pelicula7,P.pelicula8,P.pelicula9,P.pelicula12,P.pelicula14]
+videoclub3 = VideoClub 3 "Hollywood movies"     "Buenos Aires 24" [C.cliente7,C.cliente8,C.cliente9,C.cliente10] [P.pelicula7,P.pelicula8,P.pelicula9,P.pelicula12]
 
 videoclubs  = [videoclub1,videoclub2,videoclub3]
 

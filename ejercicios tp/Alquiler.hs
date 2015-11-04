@@ -23,6 +23,8 @@ alquiler8  = Alquiler 8  V.videoclub3 C.cliente8  P.pelicula8
 alquiler9  = Alquiler 9  V.videoclub3 C.cliente10 P.pelicula9
 alquiler10 = Alquiler 10 V.videoclub1 C.cliente3  P.pelicula10
 alquiler11 = Alquiler 11 V.videoclub1 C.cliente1  P.pelicula14
+alquiler12 = Alquiler 12 V.videoclub1 C.cliente2  P.pelicula15
+
 
 alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquiler7,alquiler8,alquiler9,alquiler10,alquiler11]
 
