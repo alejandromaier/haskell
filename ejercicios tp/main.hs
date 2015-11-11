@@ -114,8 +114,9 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 -- 3.    ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
 -- 4.  y CantidadTitulosOriginales, que devuelve una lista con las películas de todos los videoclubs, sin repetidos.
 -- 5.  y peliculasDisponibles, que devuelve una lista con las películas disponibles, de entre los videoclubs de la red, para alquilar y el número de copias.
--- 6.  c peliculasDisponiblesPorCategoria, que devuelve una lista con las películas disponibles por categoría seleccionada, de entre los videoclubs de la red, para alquilar y el número de copias.*
-        --falta hacer una lista de peliculas por categorias
+-- 6.  c peliculasDisponiblesPorCategoria, que devuelve una lista con las películas disponibles por categoría seleccionada,
+--       de entre los videoclubs de la red, para alquilar y el número de copias.*
+        --falta meter  en el menu y pasar los parametros
 
 -- 7.  y CantidadDePeliculasPorCategoria, devuelve un listado de categorías con la cantidad de películas que hay dentro de esa clasificación.*
 -- 8.  c BuscarPeli, devuelve un listado con los videoclubs que tienen una determinada película.*

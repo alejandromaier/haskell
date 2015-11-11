@@ -67,6 +67,54 @@ peliculaNombre = nub . map _titulo
 tituloPeliculas :: Pelicula -> String
 tituloPeliculas (Pelicula {_titulo = t}) = "Titulo: "++t
 
+
+
+
+
+
+
+
+
+
+
+
+
+cateoriaPelicula :: Pelicula -> String
+cateoriaPelicula (Pelicula {_categoria = c}) = c
+
+
+
+
+--listaDePeliculasPorCategoria :: String -> [Pelicula]
+ --listaDePeliculasPorCategoria categoria = [x | x <- peliculas, c <- categoria, (cateoriaPelicula x) `elem` c ]
+
+
+
+
+--******FUNCIONA!*******
+--let x = [x | x <- P.peliculas, cat <- "Ficcion", P.cateoriaPelicula x == "Ficcion" ]
+--or
+--let x = [x | x <- P.peliculas_na, cat <- "Ficcion", P.cateoriaPelicula x == "Ficcion" ]
+
+--nub x
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 tellPelicula :: Pelicula -> String
 tellPelicula (Pelicula {_id = i, _titulo = t, _alquilada=a}) = "Pelicula "++ show i ++ ": " ++ t ++ " -> "++estadoPelicula a
 
