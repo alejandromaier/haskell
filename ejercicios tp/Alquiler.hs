@@ -30,6 +30,17 @@ alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquil
 
 
 
+-- *****************************
+-- *****************************
+--nosequenombre :: Pelicula -> VideoClub ->
+--let x pelicula videoclub = [p | a <- A.alquileres, v <- ((A._videclub) a) , p <- ((A._pelicula) a) , v == videoclub , p == pelicula]
+--lenght de lo de arriba y lesto
+
+
+
+-- ***************Clientes raros****************
+-- ***********************************************
+
 --ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
 --clientesRaros :: -> [C.Cliente]
 --clientesRaros = [[c | a <- a1, c <- $(_cliente) a , v <- $(_videoclub) a , p <- $(_pelicula) a ,  ] a1 <- listaDelistasAlquileres]

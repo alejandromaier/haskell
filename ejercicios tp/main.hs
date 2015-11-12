@@ -104,7 +104,7 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 -- •   y  peliculasPorCategoria, que devuelve un listado de películas por categoría seleccionada.*
 -- •   y  PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). El cliente puede alquilar más de una copia de la misma película.
 -- •   y  Alquiló, que indica si un cliente de un videoclub alquiló una película en particular.
--- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
+-- •      CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.
 -- •   c  DisponibleParaAlquilar, que indica si una película esta disponible para ser alquilada en el videoclub (por ejemplo, una película puede estar en un videoclub pero no estar disponible porque todas sus copias están alquiladas, o no estar disponible porque no esta en el catálogo).
 -- •   y  CategoriasDisponibles, que devuelve una lista de categorías disponibles en el videoclub.*
 
