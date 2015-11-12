@@ -18,6 +18,14 @@ videoclub3 = VideoClub 3 "Hollywood movies"     "Buenos Aires 24" [C.cliente7,C.
 
 videoclubs  = [videoclub1,videoclub2,videoclub3]
 
+
+
+algo :: P.Pelicula -> [VideoClub]
+algo pelicula = [ v | v <- videoclubs, p <- pelicula, (elem (p) $(_peliculas) v) == True ]
+
+
+
+
 indiceVideoClub :: VideoClub -> String
 indiceVideoClub (VideoClub {_id=i,_nombre=n})= show i ++ ": " ++n ++ "\n"
 

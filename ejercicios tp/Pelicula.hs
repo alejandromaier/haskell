@@ -91,13 +91,12 @@ cateoriaPelicula (Pelicula {_categoria = c}) = c
 
 
 
---******FUNCIONA!*******
+-- ******FUNCIONA!*******
 --let x = [x | x <- P.peliculas, cat <- "Ficcion", P.cateoriaPelicula x == "Ficcion" ]
 --or
 --let x = [x | x <- P.peliculas_na, cat <- "Ficcion", P.cateoriaPelicula x == "Ficcion" ]
 
 --nub x
-
 
 
 
