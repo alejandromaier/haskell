@@ -32,9 +32,12 @@ alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquil
 
 --ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
 --clientesRaros :: -> [C.Cliente]
---clientesRaros = [c | a <- alquileres, c <- $(_cliente) a , v <- $(_videoclub) a , p <- $(_pelicula) a ,  ]
---transformar la lista de alquileres en una lista de listas de alquileres por cliente
+--clientesRaros = [[c | a <- a1, c <- $(_cliente) a , v <- $(_videoclub) a , p <- $(_pelicula) a ,  ] a1 <- listaDelistasAlquileres]
 
+--transformar la lista de alquileres en una lista de listas de alquileres por cliente [[alquiler1, alquiler2], [alquiler3, alquiler4]]
+--peliculas por lista de alquileres, si se repite una pelicula que devuelva el nombre de la pelicula o la pelicula.
+--  
+--como verificar n == n+1?
 
 
 alquilerDatos :: Alquiler -> String
