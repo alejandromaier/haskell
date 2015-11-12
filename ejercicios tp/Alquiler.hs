@@ -28,6 +28,15 @@ alquiler12 = Alquiler 12 V.videoclub1 C.cliente2  P.pelicula15
 
 alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquiler7,alquiler8,alquiler9,alquiler10,alquiler11,alquiler12]
 
+
+
+--ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
+--clientesRaros :: -> [C.Cliente]
+--clientesRaros = [c | a <- alquileres, c <- $(_cliente) a , v <- $(_videoclub) a , p <- $(_pelicula) a ,  ]
+--transformar la lista de alquileres en una lista de listas de alquileres por cliente
+
+
+
 alquilerDatos :: Alquiler -> String
 alquilerDatos (Alquiler{_id=i,_videoclub=v,_cliente=c,_pelicula=p}) = show i ++"-"
                                                     ++"El cliente "++C.nombreApellidoCliente c++" alquilo la pelicula '"++P.tituloPelicula p
