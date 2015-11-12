@@ -43,6 +43,30 @@ peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6,
 agruparPorCat :: Pelicula -> Pelicula -> Bool
 agruparPorCat t1 t2 = _categoria t1 == _categoria t2
 
+
+
+
+
+-- *********************************************************
+--masAlquiladaEnLaRed, que devuelve la película más alquilada en todos los videoclubs de la red.
+-- *********************************************************
+
+agruparPorTitulo :: Pelicula -> Pelicula -> Bool
+agruparPorTitulo t1 t2 = _titulo t1 == _titulo t2
+
+--sortByTitle = $groupBy P.agruparPorTitulo $ sortBy (\x y -> P._titulo x `compare` P._titulo y) P.peliculas
+
+
+masAlquiladaEnLaRed = tituloPelicula $head (last (sortBy (\x y -> (length x) `compare` (length y)) $groupBy agruparPorTitulo $ sortBy (\x y -> _titulo x `compare` _titulo y) peliculas_alquiladas))
+
+peliculas_alquiladas = [ p | p <- peliculas, p_na <- peliculas_na,  p /= p_na] 
+
+
+
+
+
+
+
 -- agruparPorVC :: Pelicula -> Pelicula -> Bool
 -- agruparPorVC t1 t2 = _videoclub t1 == _videoclub t2 -- peliculas en videoclub
 
@@ -68,7 +92,8 @@ tituloPeliculas :: Pelicula -> String
 tituloPeliculas (Pelicula {_titulo = t}) = "Titulo: "++t
 
 
-
+tituloPelicula :: Pelicula -> String
+tituloPelicula (Pelicula {_titulo = t}) = t
 
 
 
@@ -121,8 +146,7 @@ peliculaIndice :: Pelicula -> String
 peliculaIndice (Pelicula {_id = i, _titulo = t}) = "Pelicula "++ show i ++ ": " ++ t
 
 
-tituloPelicula :: Pelicula -> String
-tituloPelicula (Pelicula {_titulo = t}) = t
+
 
 copiasPelicula :: Pelicula -> String
 copiasPelicula (Pelicula {_id = i,_titulo = t}) = "Pelicula: "++ show i++ ": "++ t++ " | Cantidad de copias: "++ show(cantidad_copias t)
