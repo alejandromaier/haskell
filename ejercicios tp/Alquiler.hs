@@ -91,7 +91,7 @@ cargarAlquiler alquileres = do
 listarAlquileres alquileres = mapM_ print $map (alquilerDatos) alquileres
 
 opciones :: [(Int,(String))]
-opciones = zip [1..] [("Cargar Alquiler"),("Listar Alquileres"),("Alquileres por Cliente"),("Verificar si un cliente alquilo una pelicula especifica."),("Volver al menu anterior"),("Salir")]
+opciones = zip [1..] [("Cargar Alquiler"),("Listar Alquileres"),("Alquileres de un Cliente"),("Verificar si un cliente alquilo una pelicula especifica."),("Volver al menu anterior"),("Salir")]
 
 concatIndice (i, (s)) = show i ++ ".) " ++ s
 

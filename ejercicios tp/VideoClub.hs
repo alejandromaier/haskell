@@ -14,15 +14,18 @@ data VideoClub = VideoClub
 
 videoclub1 = VideoClub 1 "VHS Movies"           "25 de mayo 333"  [C.cliente1,C.cliente2,C.cliente3]             [P.pelicula1,P.pelicula2,P.pelicula3,P.pelicula10,P.pelicula14,P.pelicula15]
 videoclub2 = VideoClub 2 "All the movies 4 you" "9 de julio 128"  [C.cliente4,C.cliente5,C.cliente6]             [P.pelicula5,P.pelicula4,P.pelicula6,P.pelicula11,P.pelicula13]
-videoclub3 = VideoClub 3 "Hollywood movies"     "Buenos Aires 24" [C.cliente7,C.cliente8,C.cliente9,C.cliente10] [P.pelicula7,P.pelicula8,P.pelicula9,P.pelicula12]
+videoclub3 = VideoClub 3 "Hollywood movies"     "Buenos Aires 24" [C.cliente7,C.cliente8,C.cliente9,C.cliente10] [P.pelicula7,P.pelicula8,P.pelicula9,P.pelicula12, P.pelicula1]
 
 videoclubs  = [videoclub1,videoclub2,videoclub3]
 
 
 
-algo :: P.Pelicula -> [VideoClub]
-algo pelicula = [ v | v <- videoclubs, p <- pelicula, (elem (p) $(_peliculas) v) == True ]
-
+-- ¨*********************************
+--BuscarPeli, devuelve un listado con los videoclubs que tienen una determinada película.*
+-- **********************************
+--algo :: P.Pelicula -> [VideoClub]
+algo pelicula = [ v | v <- videoclubs, (elem (pelicula) $(_peliculas) v) == True ]
+--map (nombreVideoClub) algo
 
 
 

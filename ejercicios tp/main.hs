@@ -120,6 +120,6 @@ ejecutar n = ejecuta $ filter (\(i, _) -> i == n) opciones
 
 -- 7.  y CantidadDePeliculasPorCategoria, devuelve un listado de categorías con la cantidad de películas que hay dentro de esa clasificación.*
 -- 8.  c BuscarPeli, devuelve un listado con los videoclubs que tienen una determinada película.*
-        --Como se ve de que videoclub es la pelicula? 
+        --falta meter  en el menu y pasar los parametros
 
 -- Objetivos Adicionales de la práctica. Conseguir hacer funciones para añadir datos dinámicos como videoclubs, clientes y películas.
