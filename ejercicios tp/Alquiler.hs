@@ -30,27 +30,24 @@ alquileres = [alquiler1,alquiler2,alquiler3,alquiler4,alquiler5,alquiler6,alquil
 
 
 
--- *****************************
--- *****************************
---nosequenombre :: Pelicula -> VideoClub ->
---let x pelicula videoclub = [p | a <- A.alquileres, v <- ((A._videclub) a) , p <- ((A._pelicula) a) , v == videoclub , p == pelicula]
---lenght de lo de arriba y lesto
-
-
 
 -- ***************Clientes raros****************
 -- ***********************************************
 
---ClientesRaros, que devuelve la lista de clientes que tienen alquilada la misma película en distintos videoclubs.
---clientesRaros :: -> [C.Cliente]
---clientesRaros = [[c | a <- a1, c <- $(_cliente) a , v <- $(_videoclub) a , p <- $(_pelicula) a ,  ] a1 <- listaDelistasAlquileres]
+agruparporcliente = groupBy agruparPorCliente $ sortBy (\x y -> _cliente x `compare` _cliente y) alquileres
 
---transformar la lista de alquileres en una lista de listas de alquileres por cliente [[alquiler1, alquiler2], [alquiler3, alquiler4]]
---peliculas por lista de alquileres, si se repite una pelicula que devuelva el nombre de la pelicula o la pelicula.
---  
---como verificar n == n+1?
+agruparporvideoclub alquileres = groupBy agruparPorVideoClub $ sortBy (\x y -> _videoclub x `compare` _videoclub y) alquileres
+
+agruparporpelicula alquileres = groupBy agruparPorPelicula $ sortBy (\x y -> _pelicula x `compare` _pelicula y) alquileres
+
+op = [[[_cliente a | a <- listadealquileres_v, (length (listadealquileres_v) >1)] | listadealquileres_v <- (agruparporvideoclub listadealquileres_c)] | listadealquileres_c <- (agruparporcliente)]
 
 
+clientesRaros = mapM_ print $map (C.nombreApellidoCliente) $[head(head x) | x<- op, (x /= [[]])]
+
+
+                               --[Funciones]--
+                                                                                
 alquilerDatos :: Alquiler -> String
 alquilerDatos (Alquiler{_id=i,_videoclub=v,_cliente=c,_pelicula=p}) = show i ++"-"
                                                     ++"El cliente "++C.nombreApellidoCliente c++" alquilo la pelicula '"++P.tituloPelicula p
@@ -68,6 +65,8 @@ tellAlquiler :: C.Cliente -> V.VideoClub -> P.Pelicula -> String
 tellAlquiler (C.Cliente{C._nombre=n,C._apellido=a}) (V.VideoClub{V._nombre=nvc}) (P.Pelicula{P._titulo=t}) =
              n ++ " " ++ a ++ " alquilo la pelicula " ++ t ++ " en el videoclub "++nvc 
 
+--[]--
+
 
 --   PelículasAlquiladasPorCliente, que devuelve una lista de películas que el cliente tiene alquiladas 
 -- en el videoclub (esta función se indefine si el cliente no esta registrado en el videoclub). 
@@ -77,6 +76,32 @@ peliculasCliente cliente videoclub = filter (/=flag) $map (clienteDatos cliente 
 
 listar_alquieres_cliente cliente videoclub = mapM_ print $map (tellAlquiler cliente videoclub) (peliculasCliente cliente videoclub) 
 
+tiene_alquileres cliente videoclub = if ((peliculasCliente cliente videoclub)/=[]) then True else False
+
+alquileresCliente :: IO()
+alquileresCliente = do vc <- V.devuelveVideoclub
+                       putStrLn "Seleccione el cliente.- "
+                       V.listar_clientes vc
+                       putStrLn "Numero del cliente: "
+                       x <- readLn     
+                       let cliente = C.clientes !! pred x
+                       if (tiene_alquileres cliente vc) 
+                        then listar_alquieres_cliente cliente vc
+                        else putStrLn "Este cliente no tiene alquileres."
+
+agruparPorCliente :: Alquiler -> Alquiler -> Bool
+agruparPorCliente t1 t2 = _cliente t1 == _cliente t2                                                
+
+agruparPorVideoClub :: Alquiler -> Alquiler -> Bool
+agruparPorVideoClub t1 t2 = _videoclub t1 == _videoclub t2 
+
+agruparPorPelicula :: Alquiler -> Alquiler -> Bool
+agruparPorPelicula t1 t2 = _pelicula t1 == _pelicula t2
+
+--groupBy agruparPorCliente $ sortBy (\x y -> _cliente x `compare` _cliente y) alquileres))
+
+
+
 -------------------------------------------------------------------------------------------------------------
 
 listar_alquileres = mapM_ print $map (alquilerDatos) alquileres
@@ -84,9 +109,7 @@ listar_alquileres = mapM_ print $map (alquilerDatos) alquileres
 alquilada pelis = find (not . P._alquilada) pelis
 
 
-
--- peliculasPorCliente :: [Alquiler] -> [String]
--- peliculasPorCliente = nub . map _cliente
+--[Menu para cargar un alquiler]
 
 cargarAlquiler :: [Alquiler] -> IO [Alquiler]
 cargarAlquiler alquileres = do
@@ -159,6 +182,19 @@ alquilo cliente videoclub pelicula = elem (pelicula) $peliculasCliente cliente v
 
 verificar bool = if bool then putStrLn "El cliente si alquilo la pelicula." else putStrLn "Ese cliente no alquilo la pelicula."
 
+alquiloPelicula :: IO()
+alquiloPelicula = do videoclub <- V.devuelveVideoclub
+                     putStrLn "Seleccione el cliente.- "
+                     V.listar_clientes videoclub
+                     putStrLn "Numero del cliente: "
+                     x <- readLn     
+                     let cliente = C.clientes !! pred x
+                     putStrLn "Seleccione la pelicula.-"
+                     V.listar_peliculas_vc videoclub
+                     putStrLn "Numero de la pelicula:"
+                     p <- readLn
+                     let pelicula = P.peliculas !! pred p  
+                     verificar $alquilo cliente videoclub pelicula
 -- . -- . -- . -- .-- . -- . -- . --.-- . -- . -- . --.-- . -- . -- . --.-- . -- . -- . --
 
 -- •     CopiasAlquiladas, que devuelve la cantidad de copias de la película dada que están alquiladas en un videoclub.

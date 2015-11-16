@@ -31,12 +31,13 @@ pelicula11 = Pelicula 11  "Safe House"                        False            "
 pelicula12 = Pelicula 12  "Transformers 1"                    False            "Accion"
 pelicula13 = Pelicula 13  "Transformers 2"                    False            "Accion"
 pelicula14 = Pelicula 14  "Transformers "                     True             "Accion"
-pelicula15 = Pelicula 15   "Inception"                        False             "Ficcion"
+pelicula15 = Pelicula 15   "Inception"                        True             "Ficcion"
 pelicula16 = Pelicula 16   "Inception"                        False            "Ficcion"
+pelicula17 = Pelicula 17  "Transformers 1"                    False            "Accion"
 
 flag       = Pelicula 0 "" True ""
 
-peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9, pelicula10,pelicula11,pelicula12,pelicula13,pelicula14, pelicula15, pelicula16]
+peliculas  = [pelicula1 , pelicula2, pelicula3, pelicula4, pelicula5, pelicula6, pelicula7, pelicula8,pelicula9, pelicula10,pelicula11,pelicula12,pelicula13,pelicula14, pelicula15, pelicula16,pelicula17]
 
 
 
@@ -60,7 +61,6 @@ agruparPorTitulo t1 t2 = _titulo t1 == _titulo t2
 masAlquiladaEnLaRed = tituloPelicula $head (last (sortBy (\x y -> (length x) `compare` (length y)) $groupBy agruparPorTitulo $ sortBy (\x y -> _titulo x `compare` _titulo y) peliculas_alquiladas))
 
 peliculas_alquiladas = [ p | p <- peliculas, p_na <- peliculas_na,  p /= p_na] 
-
 
 
 
@@ -115,11 +115,19 @@ cateoriaPelicula (Pelicula {_categoria = c}) = c
 
 
 
+peliculas_categoria ctg =  [(_titulo x) ++ ", copias "++show (cantidad_copias_peliculas peliculas_na (_titulo x)) | x <- peliculas_na, cateoriaPelicula x == ctg]
+
+
+peliculasDisponiblesCategoria :: IO ()
+peliculasDisponiblesCategoria = do listar_categorias_indices peliculas
+                                   p <- readLn
+                                   let ctg = (categorias_ordenadas peliculas) !! pred p
+                                   mapM_ print $nub (peliculas_categoria ctg)
 
 -- ******FUNCIONA!*******
 --let x = [x | x <- P.peliculas, cat <- "Ficcion", P.cateoriaPelicula x == "Ficcion" ]
 --or
---let x = [nub x | x <- P.peliculas_na, cat <- "Ficcion", P.cateoriaPelicula x == "Ficcion" ]
+--let x ctg = [ x | x <- P.peliculas_na, P.cateoriaPelicula x == ctg]
 
 --nub x
 
@@ -130,11 +138,14 @@ cateoriaPelicula (Pelicula {_categoria = c}) = c
 
 
 
+------ Se usa en el punto 4)
 
+copiasPeliculas :: [Pelicula] -> Pelicula -> String
+copiasPeliculas p (Pelicula {_id = i,_titulo = t}) = t++ " | Cantidad de copias: "++ show(cantidad_copias_peliculas p t)
 
+cantidad_copias_peliculas p t =length $filter (==t) $map (tituloPelicula) p
 
-
-
+------
 
 
 
@@ -144,8 +155,6 @@ tellPelicula (Pelicula {_id = i, _titulo = t, _alquilada=a}) = "Pelicula "++ sho
 
 peliculaIndice :: Pelicula -> String
 peliculaIndice (Pelicula {_id = i, _titulo = t}) = "Pelicula "++ show i ++ ": " ++ t
-
-
 
 
 copiasPelicula :: Pelicula -> String
@@ -190,12 +199,17 @@ peliculasPorCategoria categoria = length $filter (==categoria) $map (nombreCateg
 
 cantidadDePeliculasPorCategoria = map (peliculasPorCategoria) $categorias peliculas
 
+cantPelisCategoria = mapM_ print mostrarCategoriasCantPeliculas
+
 listado_a_medias :: [(String,Int)]
 listado_a_medias = zip (categorias peliculas) cantidadDePeliculasPorCategoria
 
 cat (s, i) = s ++ " - Cantidad de peliculas: " ++ show i
 
-mostrarCategoriasCantPeliculas = map cat listado_a_medias 
+--mostrarCategoriasCantPeliculas = map cat listado_a_medias 
+
+mostrarCategoriasCantPeliculas = [fst (x) ++ " tiene " ++ show (snd ( x)) ++ " peliculas." |x <- listado_a_medias]
+
 
 
 
@@ -303,6 +317,7 @@ peliculas_por_categoria x p = mapM_ print $nub . map (tituloPelicula) $(agrupar_
 
 listar_categorias_indices p= mapM_ print $categorias_indices p
 listar_categorias       = mapM_  print $categorias_ordenadas         peliculas
+listar_categorias_p p       = mapM_  print $categorias_ordenadas         p
 -- listar_copias_peliculas = mapM_  print $map (copiasPelicula)        peliculas --arreglar que tenga en cuenta el videoclub
 
 zipeando :: [String] -> [(Integer,(String))]
@@ -314,7 +329,8 @@ concatIndice (i, (s)) = show i ++ ".) " ++ s
 listar_peliculas        = mapM_  print $map (tellPelicula)          peliculas
 listar_peliculas_vc     = mapM_  print $map (estadoPeliculas)       peliculas
 listar_peliculas_na     = mapM_  print $map (tituloPeliculas)       peliculas_na
-listar_peliculas_indice = mapM_ print  $map concatIndice $zipeando $peliculaNombre peliculas
+listar_peliculas_indice = mapM_  print $map concatIndice $zipeando $peliculaNombre peliculas
+listar_peliculas_pro    = mapM_  print $map concatIndice $zipeando $map _titulo peliculas 
 
 validar :: [Pelicula] -> String -> Maybe Int
 validar p s = esValido (reads s)
@@ -365,8 +381,16 @@ menu peliculas = do
 
 devuelvePelicula :: IO Pelicula
 devuelvePelicula = do putStrLn "Peliculas: "                       
-                      listar_peliculas
+                      listar_peliculas_pro
                       putStrLn "Ingrese el numero de una pelicula: "
                       x <- readLn
                       let pelicula = peliculas !! pred x
                       return pelicula
+
+devuelvePelicula2 :: IO String
+devuelvePelicula2 = do putStrLn "Peliculas: "                       
+                       listar_peliculas_indice
+                       putStrLn "Ingrese el numero de una pelicula: "
+                       x <- readLn
+                       let pelicula = (peliculaNombre peliculas) !! pred x
+                       return pelicula

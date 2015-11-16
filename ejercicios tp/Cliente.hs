@@ -7,7 +7,7 @@ data Cliente = Cliente
       , _edad       :: Int
       } deriving (Eq,Show,Ord)
 
-cliente1 = Cliente 1  "Facu"      "Posse"     20
+cliente1 = Cliente 1  "Facundo"   "Posse"     20
 cliente2 = Cliente 2  "Julian"    "Maier"     17
 cliente3 = Cliente 3  "Cacho"     "Nakamura"  56
 cliente4 = Cliente 4  "Mati"      "Chauchis"  53
@@ -17,6 +17,8 @@ cliente7 = Cliente 7  "Pablo"     "Escobar"   71
 cliente8 = Cliente 8  "Alejandro" "Maier"     20
 cliente9 = Cliente 9  "Amilcar"   "Rey"       20
 cliente10= Cliente 10 "Seba"      "Calderon"  20
+
+flag     = Cliente 0 "" "" 0
 
 clientes   = [cliente1, cliente2, cliente3, cliente4, cliente5, cliente6, cliente7, cliente8, cliente9, cliente10]
 
